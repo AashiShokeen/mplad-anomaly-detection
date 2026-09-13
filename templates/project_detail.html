@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="MPLAD project detail and anomaly review">
+    <title>Bridge Renovation | ANOMALY X</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="page-with-sidebar">
+        <aside class="sidebar">
+            <div class="sidebar__brand"><div class="sidebar__brand-mark">MP</div><div><p class="sidebar__brand-name">ANOMALY X</p><p class="sidebar__brand-caption">Government of India · AI-Powered Intelligence for MPLAD</p></div></div>
+            <nav class="sidebar__nav" aria-label="Main navigation"><a class="sidebar__link" href="../index.html"><i class="bi bi-grid-1x2-fill sidebar__link-icon" aria-hidden="true"></i>Overview</a><a class="sidebar__link" href="projects.html"><i class="bi bi-folder2-open sidebar__link-icon" aria-hidden="true"></i>Projects</a><a class="sidebar__link" href="flagged_projects.html"><i class="bi bi-flag sidebar__link-icon" aria-hidden="true"></i>Anomalies</a><a class="sidebar__link" href="project_comparison.html"><i class="bi bi-layout-split sidebar__link-icon" aria-hidden="true"></i>Comparison</a><a class="sidebar__link sidebar__link--active" href="project_detail.html" aria-current="page"><i class="bi bi-file-earmark-text sidebar__link-icon" aria-hidden="true"></i>Project detail</a></nav>
+            <p class="sidebar__footer">Smart India Hackathon 2026</p>
+        </aside>
+        <main class="page-shell-main project-detail"><div class="project-detail__content">
+            <a class="project-detail__back" href="projects.html"><i class="bi bi-arrow-left" aria-hidden="true"></i>Back to projects</a>
+            <header class="project-detail__hero">
+                <div>
+                    <p class="project-detail__eyebrow">e-SakshI-style record · ESAKSHI-MPLAD-RJ-2026-0248 · Barmer</p>
+                    <h1 class="project-detail__title">Bridge Renovation</h1>
+                    <p class="project-detail__subtitle">Infrastructure renewal · Public Works Department</p>
+                    <span class="project-detail__status">In progress</span>
+                </div>
+                <div class="project-detail__hero-actions"><button class="button" type="button"><i class="bi bi-download me-2" aria-hidden="true"></i>Export details</button><button class="button button--primary" type="button"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Update project</button></div>
+            </header>
+
+            <div class="project-detail__layout">
+                <div>
+                    <section class="project-detail__panel" aria-labelledby="project-information-title">
+                        <h2 class="project-detail__panel-title" id="project-information-title">Project information</h2>
+                        <p class="project-detail__panel-description">Core delivery, ownership, and funding details.</p>
+                        <div class="project-detail__facts">
+                            <div class="project-detail__fact"><span class="project-detail__fact-label">Project owner</span><span class="project-detail__fact-value">Public Works Department</span></div>
+                            <div class="project-detail__fact"><span class="project-detail__fact-label">MP constituency</span><span class="project-detail__fact-value">Barmer · Umeda Ram Beniwal</span></div>
+                            <div class="project-detail__fact"><span class="project-detail__fact-label">Work category</span><span class="project-detail__fact-value">Roads and bridges</span></div>
+                            <div class="project-detail__fact"><span class="project-detail__fact-label">Approved amount</span><span class="project-detail__fact-value">₹24 Lakh</span></div>
+                            <div class="project-detail__fact"><span class="project-detail__fact-label">Start date</span><span class="project-detail__fact-value">Jan 15, 2026</span></div>
+                            <div class="project-detail__fact"><span class="project-detail__fact-label">Target completion</span><span class="project-detail__fact-value">Dec 20, 2026</span></div>
+                        </div>
+                        <div class="project-detail__progress"><div class="project-detail__progress-header"><span>Delivery progress</span><strong>62%</strong></div><div class="project-detail__progress-track" role="progressbar" aria-label="Project delivery progress" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><div class="project-detail__progress-fill"></div></div></div>
+                    </section>
+
+                    <section class="project-detail__panel" aria-labelledby="anomalies-title">
+                        <h2 class="project-detail__panel-title" id="anomalies-title">Anomalies and review signals</h2>
+                        <p class="project-detail__panel-description">Automated checks and reporting gaps requiring attention.</p>
+                        <div class="anomaly-list">
+                            <article class="anomaly-card"><div class="anomaly-card__icon"><i class="bi bi-calendar2-x" aria-hidden="true"></i></div><div><h3 class="anomaly-card__title">Milestone update overdue</h3><p class="anomaly-card__reason">No milestone evidence has been uploaded for 14 days.</p><p class="anomaly-card__evidence">Last update: Aug 23, 2026 · Expected cadence: weekly</p></div><span class="anomaly-card__severity anomaly-card__severity--medium">Medium</span></article>
+                            <article class="anomaly-card"><div class="anomaly-card__icon"><i class="bi bi-receipt" aria-hidden="true"></i></div><div><h3 class="anomaly-card__title">Invoice documentation incomplete</h3><p class="anomaly-card__reason">Two payment records are missing supporting documents.</p><p class="anomaly-card__evidence">2 of 8 invoices need review · Last checked Sep 6, 2026</p></div><span class="anomaly-card__severity anomaly-card__severity--high">High</span></article>
+                            <article class="anomaly-card"><div class="anomaly-card__icon"><i class="bi bi-info-circle" aria-hidden="true"></i></div><div><h3 class="anomaly-card__title">Cost near category threshold</h3><p class="anomaly-card__reason">Current amount is 1.2x the Barmer/Roads group median.</p><p class="anomaly-card__evidence">Project amount: ₹24 Lakh · Group median: ₹20 Lakh</p></div><span class="anomaly-card__severity anomaly-card__severity--low">Low</span></article>
+                        </div>
+                    </section>
+                </div>
+
+                <aside>
+                    <section class="project-detail__panel" aria-labelledby="timeline-title">
+                        <h2 class="project-detail__panel-title" id="timeline-title">Project timeline</h2>
+                        <p class="project-detail__panel-description">Latest delivery milestones.</p>
+                        <ol class="project-detail__timeline">
+                            <li><div><strong>Construction phase started</strong>Jun 18, 2026</div></li>
+                            <li><div><strong>Foundation inspection passed</strong>Jul 29, 2026</div></li>
+                            <li><div><strong>Deck work in progress</strong>Aug 23, 2026</div></li>
+                            <li><div><strong>Next review due</strong>Sep 15, 2026</div></li>
+                        </ol>
+                    </section>
+                    <section class="project-detail__panel" aria-labelledby="contact-title">
+                        <h2 class="project-detail__panel-title" id="contact-title">Project contact</h2>
+                        <p class="project-detail__panel-description">Responsible delivery officer.</p>
+                        <div class="project-detail__fact"><span class="project-detail__fact-label">Officer</span><span class="project-detail__fact-value">M. Carter</span></div>
+                        <div class="project-detail__fact"><span class="project-detail__fact-label">Email</span><span class="project-detail__fact-value">m.carter@publicworks.gov</span></div>
+                    </section>
+                </aside>
+            </div>
+        </div></main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Government project listing">
+    <title>Projects | ANOMALY X</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="page-with-sidebar">
+        <aside class="sidebar">
+            <div class="sidebar__brand"><div class="sidebar__brand-mark">MP</div><div><p class="sidebar__brand-name">ANOMALY X</p><p class="sidebar__brand-caption">Government of India · AI-Powered Intelligence for MPLAD</p></div></div>
+            <nav class="sidebar__nav" aria-label="Main navigation"><a class="sidebar__link" href="../index.html"><i class="bi bi-grid-1x2-fill sidebar__link-icon" aria-hidden="true"></i>Overview</a><a class="sidebar__link sidebar__link--active" href="projects.html" aria-current="page"><i class="bi bi-folder2-open sidebar__link-icon" aria-hidden="true"></i>Projects</a><a class="sidebar__link" href="flagged_projects.html"><i class="bi bi-flag sidebar__link-icon" aria-hidden="true"></i>Anomalies</a><a class="sidebar__link" href="project_comparison.html"><i class="bi bi-layout-split sidebar__link-icon" aria-hidden="true"></i>Comparison</a><a class="sidebar__link" href="project_detail.html"><i class="bi bi-file-earmark-text sidebar__link-icon" aria-hidden="true"></i>Project detail</a></nav>
+            <p class="sidebar__footer">Smart India Hackathon 2026</p>
+        </aside>
+        <main class="page-shell-main project-listing"><div class="project-listing__content">
+            <header class="project-listing__header">
+                <div>
+                    <p class="project-listing__eyebrow">Program management</p>
+                    <h1 class="project-listing__title">Projects</h1>
+                    <p class="project-listing__description">Review e-SakshI-style project records, delivery, ownership, budgets, and current status across districts.</p>
+                </div>
+                <div class="project-listing__header-actions">
+                    <a class="button" href="project_comparison.html"><i class="bi bi-layout-split me-2" aria-hidden="true"></i>Compare projects</a>
+                    <button class="button button--primary" type="button"><i class="bi bi-plus-lg me-2" aria-hidden="true"></i>New project</button>
+                </div>
+            </header>
+
+            <section class="project-listing__toolbar filter-section" aria-label="Project filters">
+                <div class="project-listing__filters">
+                    <div class="project-listing__field">
+                        <label class="project-listing__label" for="project-search">Search projects</label>
+                        <input class="project-listing__input" id="project-search" type="search" placeholder="Search by name or project ID">
+                    </div>
+                    <div class="project-listing__field">
+                        <label class="project-listing__label" for="district-filter">District</label>
+                        <select class="project-listing__select" id="district-filter">
+                            <option>All districts</option>
+                            <option>Barmer</option>
+                            <option>Dholpur</option>
+                            <option>Jaisalmer</option>
+                        </select>
+                    </div>
+                    <div class="project-listing__field">
+                        <label class="project-listing__label" for="status-filter">Status</label>
+                        <select class="project-listing__select" id="status-filter">
+                            <option>All statuses</option>
+                            <option>Completed</option>
+                            <option>In progress</option>
+                            <option>Stalled</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="project-listing__toolbar-meta">48 projects</p>
+            </section>
+
+            <section class="project-listing__cards" aria-label="Project cards">
+                <a class="project-card" href="project_detail.html">
+                    <div class="project-card__header"><div><h2 class="project-card__title">Bridge Renovation</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0248 · Barmer · Roads</p></div><span class="project-listing__status project-listing__status--completed">Completed</span></div>
+                    <div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹24 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Today</p></div></div>
+                </a>
+                <a class="project-card" href="project_detail.html">
+                    <div class="project-card__header"><div><h2 class="project-card__title">Transit Expansion</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0247 · Jaisalmer · Transport</p></div><span class="project-listing__status project-listing__status--in-progress">In progress</span></div>
+                    <div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹81 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Yesterday</p></div></div>
+                </a>
+                <a class="project-card" href="project_detail.html">
+                    <div class="project-card__header"><div><h2 class="project-card__title">Water System Upgrade</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0246 · Dholpur · Water</p></div><span class="project-listing__status project-listing__status--stalled">Stalled</span></div>
+                    <div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹57 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Sep 6, 2026</p></div></div>
+                </a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">Rural Clinic Upgrade</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0245 · Bikaner · Health</p></div><span class="project-listing__status project-listing__status--in-progress">In progress</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹32 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Sep 5, 2026</p></div></div></a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">Market Access Road</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0244 · Kota · Roads</p></div><span class="project-listing__status project-listing__status--in-progress">In progress</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹19 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Sep 4, 2026</p></div></div></a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">School Block Construction</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0243 · Barmer · Education</p></div><span class="project-listing__status project-listing__status--stalled">Stalled</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹26 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Sep 3, 2026</p></div></div></a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">Community Solar Scheme</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0242 · Jaisalmer · Energy</p></div><span class="project-listing__status project-listing__status--completed">Completed</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹14 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Sep 2, 2026</p></div></div></a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">Drainage Improvement</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0241 · Dholpur · Water</p></div><span class="project-listing__status project-listing__status--in-progress">In progress</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹9.8 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Sep 1, 2026</p></div></div></a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">Village Digital Centre</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0240 · Bikaner · Technology</p></div><span class="project-listing__status project-listing__status--completed">Completed</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹7.6 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Aug 30, 2026</p></div></div></a>
+                <a class="project-card" href="project_detail.html"><div class="project-card__header"><div><h2 class="project-card__title">Agricultural Storage Hub</h2><p class="project-card__meta">ESAKSHI-MPLAD-RJ-2026-0239 · Kota · Agriculture</p></div><span class="project-listing__status project-listing__status--stalled">Stalled</span></div><div class="project-card__details"><div><p class="project-card__label">Amount</p><p class="project-card__amount">₹21 Lakh</p></div><div><p class="project-card__label">Updated</p><p class="project-card__meta">Aug 28, 2026</p></div></div></a>
+            </section>
+
+            <section class="project-listing__table-wrap" aria-labelledby="project-table-title">
+                <h2 class="visually-hidden" id="project-table-title">Project results</h2>
+                <table class="project-listing__table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project</th>
+                            <th scope="col">District</th>
+                            <th scope="col">Work category</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Bridge Renovation</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0248</span></a></td>
+                            <td>Barmer</td>
+                            <td>Roads</td>
+                            <td><span class="project-listing__status project-listing__status--completed">Completed</span></td>
+                            <td class="project-listing__amount">₹24 Lakh</td>
+                            <td class="project-listing__muted">Today</td>
+                        </tr>
+                        <tr>
+                            <td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Transit Expansion</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0247</span></a></td>
+                            <td>Jaisalmer</td>
+                            <td>Transport</td>
+                            <td><span class="project-listing__status project-listing__status--in-progress">In progress</span></td>
+                            <td class="project-listing__amount">₹81 Lakh</td>
+                            <td class="project-listing__muted">Yesterday</td>
+                        </tr>
+                        <tr>
+                            <td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Water System Upgrade</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0246</span></a></td>
+                            <td>Dholpur</td>
+                            <td>Water</td>
+                            <td><span class="project-listing__status project-listing__status--stalled">Stalled</span></td>
+                            <td class="project-listing__amount">₹57 Lakh</td>
+                            <td class="project-listing__muted">Sep 6, 2026</td>
+                        </tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Rural Clinic Upgrade</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0245</span></a></td><td>Bikaner</td><td>Health</td><td><span class="project-listing__status project-listing__status--in-progress">In progress</span></td><td class="project-listing__amount">₹32 Lakh</td><td class="project-listing__muted">Sep 5, 2026</td></tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Market Access Road</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0244</span></a></td><td>Kota</td><td>Roads</td><td><span class="project-listing__status project-listing__status--in-progress">In progress</span></td><td class="project-listing__amount">₹19 Lakh</td><td class="project-listing__muted">Sep 4, 2026</td></tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">School Block Construction</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0243</span></a></td><td>Barmer</td><td>Education</td><td><span class="project-listing__status project-listing__status--stalled">Stalled</span></td><td class="project-listing__amount">₹26 Lakh</td><td class="project-listing__muted">Sep 3, 2026</td></tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Community Solar Scheme</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0242</span></a></td><td>Jaisalmer</td><td>Energy</td><td><span class="project-listing__status project-listing__status--completed">Completed</span></td><td class="project-listing__amount">₹14 Lakh</td><td class="project-listing__muted">Sep 2, 2026</td></tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Drainage Improvement</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0241</span></a></td><td>Dholpur</td><td>Water</td><td><span class="project-listing__status project-listing__status--in-progress">In progress</span></td><td class="project-listing__amount">₹9.8 Lakh</td><td class="project-listing__muted">Sep 1, 2026</td></tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Village Digital Centre</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0240</span></a></td><td>Bikaner</td><td>Technology</td><td><span class="project-listing__status project-listing__status--completed">Completed</span></td><td class="project-listing__amount">₹7.6 Lakh</td><td class="project-listing__muted">Aug 30, 2026</td></tr>
+                        <tr><td><a class="project-listing__project" href="project_detail.html"><span class="project-listing__project-name">Agricultural Storage Hub</span><span class="project-listing__project-id">ESAKSHI-MPLAD-RJ-2026-0239</span></a></td><td>Kota</td><td>Agriculture</td><td><span class="project-listing__status project-listing__status--stalled">Stalled</span></td><td class="project-listing__amount">₹21 Lakh</td><td class="project-listing__muted">Aug 28, 2026</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <footer class="project-listing__footer">
+                <p class="project-listing__toolbar-meta">Showing 1 to 10 of 48 projects</p>
+                <nav aria-label="Project pages">
+                    <ul class="project-listing__pagination">
+                        <li><a class="project-listing__page-link" href="#" aria-label="Previous page"><i class="bi bi-chevron-left" aria-hidden="true"></i></a></li>
+                        <li><a class="project-listing__page-link project-listing__page-link--active" href="#" aria-current="page">1</a></li>
+                        <li><a class="project-listing__page-link" href="#">2</a></li>
+                        <li><a class="project-listing__page-link" href="#">3</a></li>
+                        <li><a class="project-listing__page-link" href="#" aria-label="Next page"><i class="bi bi-chevron-right" aria-hidden="true"></i></a></li>
+                    </ul>
+                </nav>
+            </footer>
+        </div></main>
+    </div>
+</body>
+</html>
