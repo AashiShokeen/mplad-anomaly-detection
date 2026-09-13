@@ -1,0 +1,89 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPLAD Anomaly Detection</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom CSS (Bhoomi's work) -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- SIDEBAR (Left Side) -->
+    <!-- ============================================ -->
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-dark text-white" id="sidebar-wrapper" style="min-width: 250px; min-height: 100vh;">
+            <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom border-secondary">
+                <i class="bi bi-building me-2"></i>MPLAD
+            </div>
+            <div class="list-group list-group-flush my-3">
+                <a href="{{ url_for('main.dashboard') }}" class="list-group-item list-group-item-action bg-transparent text-white">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
+                <a href="{{ url_for('main.flagged') }}" class="list-group-item list-group-item-action bg-transparent text-white">
+                    <i class="bi bi-flag me-2"></i>Flagged Projects
+                </a>
+                <a href="{{ url_for('main.projects') }}" class="list-group-item list-group-item-action bg-transparent text-white">
+                    <i class="bi bi-list-ul me-2"></i>All Projects
+                </a>
+                <a href="{{ url_for('main.analytics') }}" class="list-group-item list-group-item-action bg-transparent text-white">
+                    <i class="bi bi-bar-chart me-2"></i>Analytics
+                </a>
+                <a href="{{ url_for('main.logout') }}" class="list-group-item list-group-item-action bg-transparent text-white">
+                    <i class="bi bi-box-arrow-right me-2"></i>Logout
+                </a>
+            </div>
+        </div>
+        
+        <!-- ============================================ -->
+        <!-- PAGE CONTENT (Right Side) -->
+        <!-- ============================================ -->
+        <div id="page-content-wrapper" class="w-100">
+            <!-- Header / Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="menu-toggle">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <span class="navbar-brand ms-2">MPLAD Anomaly Detection</span>
+                    <div class="d-flex align-items-center">
+                        <span class="me-3 text-muted small">Welcome, Admin</span>
+                        <i class="bi bi-person-circle fs-4 text-primary"></i>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- Main Content Area -->
+            <div class="container-fluid px-4">
+                {% block content %}
+                {% endblock %}
+            </div>
+            
+            <!-- Footer -->
+            <footer class="bg-light text-center text-muted py-3 mt-4 border-top">
+                <small>MPLAD Anomaly Detection System &copy; 2026 | Built for SIH</small>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Toggle script for sidebar -->
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("wrapper").classList.toggle("toggled");
+        });
+    </script>
+</body>
+</html>
