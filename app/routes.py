@@ -1,5 +1,5 @@
 # app/routes.py
-from flask import render_template, jsonify, request, send_file, Blueprint
+from flask import render_template, jsonify, request, send_file, Blueprint, redirect, url_for
 from flask_login import login_required
 from app import db
 from app.models import Project, Anomaly
@@ -17,9 +17,13 @@ def safe_date(value, fmt='%Y-%m-%d'):
 
 @main_bp.route('/')
 def index():
-    return render_template('dashboard.html')
+    from flask_login import current_user
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard'))
+    return redirect(url_for('auth.login'))
 
 @main_bp.route('/dashboard')
+@login_required
 def dashboard():
     return render_template('dashboard.html')
 
