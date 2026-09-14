@@ -187,3 +187,8 @@ def api_dashboard_panels():
         'high_priority': high_priority,
         'district_count': district_count,
     })
+
+
+@main_bp.route('/health')
+def health():
+    return "OK", 200
