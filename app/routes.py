@@ -123,3 +123,63 @@ def api_districts_count():
     from sqlalchemy import func
     count = db.session.query(func.count(func.distinct(Project.district))).scalar() or 0
     return jsonify({'district_count': count})
+
+@main_bp.route('/api/dashboard/panels')
+def api_dashboard_panels():
+    from sqlalchemy import func
+
+    # 1. Status breakdown
+    statuses = db.session.query(
+        Project.work_status, func.count(Project.id)
+    ).group_by(Project.work_status).all()
+    status_map = {s or 'unknown': c for s, c in statuses}
+
+    # 2. Top MPs by total amount (extract from project name if MP info exists)
+    # We'll use district as proxy since we don't have MP field
+    top_districts = db.session.query(
+        Project.district, func.sum(Project.amount)
+    ).filter(Project.district.isnot(None)).group_by(
+        Project.district
+    ).order_by(func.sum(Project.amount).desc()).limit(3).all()
+
+    # 3. Allocation by district (top 5)
+    top5 = db.session.query(
+        Project.district, func.sum(Project.amount)
+    ).filter(Project.district.isnot(None)).group_by(
+        Project.district
+    ).order_by(func.sum(Project.amount).desc()).limit(5).all()
+
+    # 4. Recent cost outliers
+    cost_anomalies = Anomaly.query.filter_by(
+        anomaly_type='cost_outlier'
+    ).order_by(Anomaly.severity_score.desc()).limit(3).all()
+
+    outliers = []
+    for a in cost_anomalies:
+        p = Project.query.get(a.project_id)
+        if p:
+            outliers.append({
+                'project': p.name[:60] if p.name else 'Unknown',
+                'district': p.district or 'N/A',
+                'amount': p.amount or 0,
+                'description': a.description,
+                'severity': a.severity_score,
+            })
+
+    # 5. High-priority count (severity > 5)
+    high_priority = Anomaly.query.filter(Anomaly.severity_score > 5).count()
+
+    # 6. District count
+    district_count = db.session.query(
+        func.count(func.distinct(Project.district))
+    ).scalar() or 0
+
+    return jsonify({
+        'status_map': status_map,
+        'total_projects': Project.query.count(),
+        'top_districts': [{'district': d, 'amount': float(a or 0)} for d, a in top_districts],
+        'top5_districts': [{'district': d, 'amount': float(a or 0)} for d, a in top5],
+        'outliers': outliers,
+        'high_priority': high_priority,
+        'district_count': district_count,
+    })

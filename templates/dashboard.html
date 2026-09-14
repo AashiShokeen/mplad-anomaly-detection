@@ -34,32 +34,89 @@
             <section class="dashboard-summary" aria-label="Portfolio summary">
                 <article class="dashboard-summary__card"><div><p class="dashboard-summary__label">Total projects</p><p class="dashboard-summary__value dashboard-counter" data-counter="100">100</p><p class="dashboard-summary__meta">+6 this quarter</p></div><i class="bi bi-kanban dashboard-summary__icon" aria-hidden="true"></i></article>
                 <article class="dashboard-summary__card dashboard-summary__card--success"><div><p class="dashboard-summary__label">Total amount</p><p class="dashboard-summary__value dashboard-counter" data-counter="4.8" data-prefix="₹" data-suffix=" Cr" data-decimals="1">₹4.8 Cr</p><p class="dashboard-summary__meta">Across active programs</p></div><i class="bi bi-cash-stack dashboard-summary__icon" aria-hidden="true"></i></article>
-                <article class="dashboard-summary__card dashboard-summary__card--danger"><div><p class="dashboard-summary__label">Flagged count</p><p class="dashboard-summary__value dashboard-counter" data-counter="55">55</p><p class="dashboard-summary__meta">5 high priority</p></div><i class="bi bi-flag dashboard-summary__icon" aria-hidden="true"></i></article>
-                <article class="dashboard-summary__card dashboard-summary__card--warning"><div><p class="dashboard-summary__label">Districts covered</p><p class="dashboard-summary__value dashboard-counter" data-counter="47">47</p><p class="dashboard-summary__meta">Across 6 regions</p></div><i class="bi bi-geo-alt dashboard-summary__icon" aria-hidden="true"></i></article>
+                <article class="dashboard-summary__card dashboard-summary__card--danger"><div><p class="dashboard-summary__label">Flagged count</p><p class="dashboard-summary__value dashboard-counter" data-counter="55">55</p><p class="dashboard-summary__meta">54 high priority</p></div><i class="bi bi-flag dashboard-summary__icon" aria-hidden="true"></i></article>
+                <article class="dashboard-summary__card dashboard-summary__card--warning"><div><p class="dashboard-summary__label">Districts covered</p><p class="dashboard-summary__value dashboard-counter" data-counter="47">47</p><p class="dashboard-summary__meta">47 districts</p></div><i class="bi bi-geo-alt dashboard-summary__icon" aria-hidden="true"></i></article>
             </section>
 
             <section class="dashboard-grid" id="reports" aria-label="Portfolio analysis">
                 <article class="dashboard-panel status-distribution">
-                    <div class="dashboard-panel__header"><div><p class="dashboard-panel__eyebrow">Portfolio health</p><h2 class="dashboard-panel__title">Status distribution</h2></div><span class="dashboard-panel__meta">48 projects</span></div>
-                    <div class="status-distribution__content"><div class="status-distribution__chart" role="img" aria-label="65 percent completed, 25 percent in progress, 10 percent stalled"><span>48</span><small>projects</small></div><ul class="status-distribution__legend"><li><span class="status-distribution__key status-distribution__key--completed"></span><span>Completed</span><strong>31 <small>65%</small></strong></li><li><span class="status-distribution__key status-distribution__key--progress"></span><span>In progress</span><strong>12 <small>25%</small></strong></li><li><span class="status-distribution__key status-distribution__key--stalled"></span><span>Stalled</span><strong>5 <small>10%</small></strong></li></ul></div>
+                    <div class="dashboard-panel__header">
+                        <div>
+                            <p class="dashboard-panel__eyebrow">Portfolio health</p>
+                            <h2 class="dashboard-panel__title">Status distribution</h2>
+                        </div>
+                        <span class="dashboard-panel__meta">100 projects</span>
+                    </div>
+                    <div class="status-distribution__content">
+                        <div class="status-distribution__chart" role="img" aria-label="100 percent action pending">
+                            <span>100</span>
+                            <small>projects</small>
+                        </div>
+                        <ul class="status-distribution__legend">
+                            <li>
+                                <span class="status-distribution__key status-distribution__key--completed"></span>
+                                <span>Action Pending</span>
+                                <strong>100 <small>100%</small></strong>
+                            </li>
+                            <li>
+                                <span class="status-distribution__key status-distribution__key--progress"></span>
+                                <span>In progress</span>
+                                <strong>0 <small>0%</small></strong>
+                            </li>
+                            <li>
+                                <span class="status-distribution__key status-distribution__key--stalled"></span>
+                                <span>Stalled</span>
+                                <strong>0 <small>0%</small></strong>
+                            </li>
+                        </ul>
+                    </div>
                 </article>
-                <article class="dashboard-panel top-mps"><div class="dashboard-panel__header"><div><p class="dashboard-panel__eyebrow">Leadership view</p><h2 class="dashboard-panel__title">Top MPs</h2></div><span class="dashboard-panel__meta">By allocation</span></div><ol class="top-mps__list"><li><span class="top-mps__rank">01</span><span class="top-mps__person"><strong>Hon. A. Williams</strong><small>North District</small></span><span class="top-mps__amount">$24.8M</span></li><li><span class="top-mps__rank">02</span><span class="top-mps__person"><strong>Hon. R. Patel</strong><small>Central District</small></span><span class="top-mps__amount">$19.3M</span></li><li><span class="top-mps__rank">03</span><span class="top-mps__person"><strong>Hon. M. Okafor</strong><small>South District</small></span><span class="top-mps__amount">$16.7M</span></li></ol><a class="dashboard-panel__link" href="/projects">View allocation details <i class="bi bi-arrow-right" aria-hidden="true"></i></a></article>
+
+                <article class="dashboard-panel top-mps">
+                    <div class="dashboard-panel__header">
+                        <div>
+                            <p class="dashboard-panel__eyebrow">Leadership view</p>
+                            <h2 class="dashboard-panel__title">Top districts</h2>
+                        </div>
+                        <span class="dashboard-panel__meta">By allocation</span>
+                    </div>
+                    <ol class="top-mps__list" id="topDistrictsList">
+                        <li><span class="top-mps__rank">01</span><span class="top-mps__person"><strong>Loading...</strong><small>—</small></span><span class="top-mps__amount">—</span></li>
+                    </ol>
+                    <a class="dashboard-panel__link" href="/projects">View allocation details <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                </article>
             </section>
 
             <section class="dashboard-panel allocation-chart" aria-labelledby="allocation-chart-title">
-                <div class="dashboard-panel__header"><div><p class="dashboard-panel__eyebrow">Funding overview</p><h2 class="dashboard-panel__title" id="allocation-chart-title">Allocation by district</h2><p class="dashboard-panel__description">Committed project funding across the highest-funded districts.</p></div><span class="dashboard-panel__meta">$126.4M total</span></div>
-                <div class="allocation-chart__plot" role="img" aria-label="North 24.8 million dollars, Central 19.3 million dollars, South 16.7 million dollars, East 13.2 million dollars, West 10.6 million dollars">
-                    <div class="allocation-chart__row"><span class="allocation-chart__label">North</span><div class="allocation-chart__track"><span class="allocation-chart__bar allocation-chart__bar--north" style="--bar-width: 100%"></span></div><strong>$24.8M</strong></div>
-                    <div class="allocation-chart__row"><span class="allocation-chart__label">Central</span><div class="allocation-chart__track"><span class="allocation-chart__bar allocation-chart__bar--central" style="--bar-width: 78%"></span></div><strong>$19.3M</strong></div>
-                    <div class="allocation-chart__row"><span class="allocation-chart__label">South</span><div class="allocation-chart__track"><span class="allocation-chart__bar allocation-chart__bar--south" style="--bar-width: 67%"></span></div><strong>$16.7M</strong></div>
-                    <div class="allocation-chart__row"><span class="allocation-chart__label">East</span><div class="allocation-chart__track"><span class="allocation-chart__bar allocation-chart__bar--east" style="--bar-width: 53%"></span></div><strong>$13.2M</strong></div>
-                    <div class="allocation-chart__row"><span class="allocation-chart__label">West</span><div class="allocation-chart__track"><span class="allocation-chart__bar allocation-chart__bar--west" style="--bar-width: 43%"></span></div><strong>$10.6M</strong></div>
+                <div class="dashboard-panel__header">
+                    <div>
+                        <p class="dashboard-panel__eyebrow">Funding overview</p>
+                        <h2 class="dashboard-panel__title" id="allocation-chart-title">Allocation by district</h2>
+                        <p class="dashboard-panel__description">Committed project funding across the highest-funded districts.</p>
+                    </div>
+                    <span class="dashboard-panel__meta">₹4.8 Cr total</span>
+                </div>
+                <div class="allocation-chart__plot" id="allocationPlot">
+                    <div class="allocation-chart__row"><span class="allocation-chart__label">Loading...</span><div class="allocation-chart__track"><span class="allocation-chart__bar" style="--bar-width: 0%"></span></div><strong>—</strong></div>
                 </div>
             </section>
 
-            <section class="dashboard-panel cost-outliers" aria-labelledby="cost-outliers-title"><div class="dashboard-panel__header"><div><p class="dashboard-panel__eyebrow">Risk monitoring</p><h2 class="dashboard-panel__title" id="cost-outliers-title">Recent cost outliers</h2><p class="dashboard-panel__description">Projects exceeding three times the median for their district and work category.</p></div><a class="dashboard-panel__link" href="/flagged">View all flagged <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div><div class="cost-outliers__list"><article class="cost-outlier"><div class="cost-outlier__icon"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i></div><div class="cost-outlier__project"><strong>Water System Upgrade</strong><span>South · Water</span></div><div class="cost-outlier__comparison"><span class="cost-outlier__amount">$5.7M</span><span>Median $1.5M · 3.8x</span></div><span class="cost-outlier__severity cost-outlier__severity--high">High</span></article><article class="cost-outlier"><div class="cost-outlier__icon"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i></div><div class="cost-outlier__project"><strong>Transit Expansion</strong><span>Central · Transport</span></div><div class="cost-outlier__comparison"><span class="cost-outlier__amount">$8.1M</span><span>Median $2.4M · 3.4x</span></div><span class="cost-outlier__severity cost-outlier__severity--high">High</span></article><article class="cost-outlier"><div class="cost-outlier__icon"><i class="bi bi-info-circle" aria-hidden="true"></i></div><div class="cost-outlier__project"><strong>Bridge Renovation</strong><span>North · Roads</span></div><div class="cost-outlier__comparison"><span class="cost-outlier__amount">$2.4M</span><span>Median $2.0M · 1.2x</span></div><span class="cost-outlier__severity cost-outlier__severity--medium">Medium</span></article></div></section>
+            <section class="dashboard-panel cost-outliers" aria-labelledby="cost-outliers-title">
+                <div class="dashboard-panel__header">
+                    <div>
+                        <p class="dashboard-panel__eyebrow">Risk monitoring</p>
+                        <h2 class="dashboard-panel__title" id="cost-outliers-title">Recent cost outliers</h2>
+                        <p class="dashboard-panel__description">Projects exceeding three times the median for their district and work category.</p>
+                    </div>
+                    <a class="dashboard-panel__link" href="/flagged">View all flagged <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="cost-outliers__list" id="costOutliersList">
+                    <p class="text-muted">Loading...</p>
+                </div>
+            </section>
         </main>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const counters = document.querySelectorAll('.dashboard-counter');
@@ -78,7 +135,6 @@
                 renderCounter(counter, target);
                 return;
             }
-
             const duration = 1000;
             const startedAt = performance.now();
             const step = (now) => {
@@ -101,7 +157,7 @@
         counters.forEach((counter) => counterObserver.observe(counter));
 
         document.querySelector('#export-report').addEventListener('click', () => {
-            const report = 'Metric,Value\nTotal projects,48\nTotal amount,$126.4M\nFlagged count,12\nDistricts covered,18\n';
+            const report = 'Metric,Value\nTotal projects,100\nTotal amount,₹4.8 Cr\nFlagged count,55\nDistricts covered,47\n';
             const link = document.createElement('a');
             link.href = URL.createObjectURL(new Blob([report], { type: 'text/csv' }));
             link.download = 'mplad-monitor-summary.csv';
@@ -109,33 +165,112 @@
             URL.revokeObjectURL(link.href);
         });
     </script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-        fetch('/api/dashboard/stats')
-            .then(r => r.json())
-            .then(data => {
-                document.querySelectorAll('.dashboard-summary__card').forEach(card => {
-                    const label = card.querySelector('.dashboard-summary__label')?.textContent?.toLowerCase() || '';
-                    const valueEl = card.querySelector('.dashboard-summary__value');
-                    if (!valueEl) return;
 
-                    if (label.includes('total projects')) {
-                        valueEl.textContent = data.total_projects || 0;
-                    } else if (label.includes('total amount')) {
-                        valueEl.textContent = '₹' + (data.total_amount_cr || 0) + ' Cr';
-                    } else if (label.includes('flagged')) {
-                        valueEl.textContent = data.total_anomalies || 0;
-                    } else if (label.includes('districts')) {
-    fetch('/api/dashboard/districts')
-        .then(r => r.json())
-        .then(d => { valueEl.textContent = String(d.district_count || 0); });
-}
-                });
-            })
-            .catch(err => console.error('Dashboard stats error:', err));
-    }, 1500);  // wait for Bhoomi's counter animation to finish
-});
-</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // === Stats cards ===
+            setTimeout(function () {
+                fetch('/api/dashboard/stats')
+                    .then(r => r.json())
+                    .then(data => {
+                        document.querySelectorAll('.dashboard-summary__card').forEach(card => {
+                            const label = card.querySelector('.dashboard-summary__label')?.textContent?.toLowerCase() || '';
+                            const valueEl = card.querySelector('.dashboard-summary__value');
+                            if (!valueEl) return;
+
+                            if (label.includes('total projects')) {
+                                valueEl.textContent = data.total_projects || 0;
+                            } else if (label.includes('total amount')) {
+                                valueEl.textContent = '₹' + (data.total_amount_cr || 0) + ' Cr';
+                            } else if (label.includes('flagged')) {
+                                valueEl.textContent = data.total_anomalies || 0;
+                            } else if (label.includes('districts')) {
+                                valueEl.textContent = '47';
+                            }
+                        });
+                    })
+                    .catch(err => console.error('Stats error:', err));
+            }, 1500);
+
+            // === Panels ===
+            fetch('/api/dashboard/panels')
+                .then(r => r.json())
+                .then(data => {
+
+                    // 1. Status pie center
+                    const chart = document.querySelector('.status-distribution__chart');
+                    if (chart) {
+                        const span = chart.querySelector('span');
+                        if (span) span.textContent = data.total_projects;
+                    }
+
+                    // 2. Top districts
+                    const mpsList = document.getElementById('topDistrictsList');
+                    if (mpsList && data.top_districts) {
+                        mpsList.innerHTML = data.top_districts.map((d, i) => `
+                            <li>
+                                <span class="top-mps__rank">0${i+1}</span>
+                                <span class="top-mps__person">
+                                    <strong>${d.district}</strong>
+                                    <small>District</small>
+                                </span>
+                                <span class="top-mps__amount">₹${(d.amount/100000).toFixed(1)}L</span>
+                            </li>
+                        `).join('');
+                    }
+
+                    // 3. Allocation by district
+                    const plot = document.getElementById('allocationPlot');
+                    if (plot && data.top5_districts) {
+                        const maxAmt = Math.max(...data.top5_districts.map(d => d.amount)) || 1;
+                        plot.innerHTML = data.top5_districts.map((d) => {
+                            const pct = Math.round((d.amount / maxAmt) * 100);
+                            return `
+                                <div class="allocation-chart__row">
+                                    <span class="allocation-chart__label">${d.district}</span>
+                                    <div class="allocation-chart__track">
+                                        <span class="allocation-chart__bar" style="--bar-width: ${pct}%"></span>
+                                    </div>
+                                    <strong>₹${(d.amount/100000).toFixed(1)}L</strong>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+
+                    // 4. Cost outliers
+                    const outlierList = document.getElementById('costOutliersList');
+                    if (outlierList && data.outliers) {
+                        if (data.outliers.length === 0) {
+                            outlierList.innerHTML = '<p class="text-muted">No cost outliers detected.</p>';
+                        } else {
+                            outlierList.innerHTML = data.outliers.map(o => `
+                                <article class="cost-outlier">
+                                    <div class="cost-outlier__icon"><i class="bi bi-exclamation-triangle"></i></div>
+                                    <div class="cost-outlier__project">
+                                        <strong>${o.project}</strong>
+                                        <span>${o.district}</span>
+                                    </div>
+                                    <div class="cost-outlier__comparison">
+                                        <span class="cost-outlier__amount">₹${(o.amount/100000).toFixed(1)}L</span>
+                                        <span>${o.description}</span>
+                                    </div>
+                                    <span class="cost-outlier__severity cost-outlier__severity--high">High</span>
+                                </article>
+                            `).join('');
+                        }
+                    }
+
+                    // 5. Meta labels
+                    const hpMeta = document.querySelector('.dashboard-summary__card--danger .dashboard-summary__meta');
+                    if (hpMeta) hpMeta.textContent = `${data.high_priority} high priority`;
+
+                    const dMeta = document.querySelector('.dashboard-summary__card--warning .dashboard-summary__meta');
+                    if (dMeta) dMeta.textContent = `${data.district_count} districts`;
+
+                })
+                .catch(err => console.error('Panels error:', err));
+        });
+    </script>
 </body>
 </html>
