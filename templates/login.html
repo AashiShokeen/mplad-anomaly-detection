@@ -9,87 +9,90 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         :root{
-            --navy-deep:   #061428;
+            --sky:         #EAF3FC;
+            --sky-deep:    #DCEAF7;
+            --white:       #FFFFFF;
             --navy:        #0B2545;
-            --navy-card:   #0E2F58;
+            --navy-soft:   #163E68;
             --blue:        #1B6FD6;
             --teal:        #17C3B2;
             --orange:      #FF7A29;
-            --ink-light:   #DCE7F5;
-            --ink-mute:    #7E93B3;
+            --saffron:     #FF9933;
+            --india-green: #128807;
+            --ink:         #0B2545;
+            --ink-mute:    #5C7392;
+            --line:        #D3E3F3;
         }
- 
+
         *{ box-sizing: border-box; }
- 
-        html, body{
-            height: 100%;
-        }
- 
+        html, body{ height: 100%; }
+
         body{
             margin: 0;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: radial-gradient(1200px 800px at 15% -10%, #123a6b 0%, transparent 55%),
-                        radial-gradient(1000px 700px at 110% 10%, #0d4a45 0%, transparent 50%),
-                        linear-gradient(160deg, var(--navy-deep) 0%, #081b34 55%, #061020 100%);
+            background:
+                radial-gradient(1100px 700px at 12% -8%, #d7ebfb 0%, transparent 55%),
+                radial-gradient(900px 650px at 105% 8%, #dbf5ef 0%, transparent 50%),
+                linear-gradient(160deg, var(--sky) 0%, #f4f9fd 55%, #ffffff 100%);
             overflow: hidden;
             position: relative;
         }
- 
+
         /* ---------- animated background layers ---------- */
- 
+
         #bg-canvas{
             position: fixed;
             inset: 0;
             z-index: 0;
             display: block;
         }
- 
+
         .scan-line{
             position: fixed;
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(23,195,178,.55), transparent);
+            background: linear-gradient(90deg, transparent, rgba(23,195,178,.5), transparent);
             z-index: 1;
-            animation: scan 6s linear infinite;
+            animation: scan 7s linear infinite;
             pointer-events: none;
         }
- 
+
         @keyframes scan{
             0%   { top: -2%; opacity: 0; }
-            8%   { opacity: .9; }
-            92%  { opacity: .9; }
+            8%   { opacity: .8; }
+            92%  { opacity: .8; }
             100% { top: 102%; opacity: 0; }
         }
- 
+
         .orbit-blob{
             position: fixed;
             border-radius: 50%;
-            filter: blur(70px);
-            opacity: .35;
+            filter: blur(80px);
+            opacity: .28;
             z-index: 0;
             pointer-events: none;
         }
         .orbit-blob.b1{
-            width: 420px; height: 420px;
+            width: 440px; height: 440px;
             background: var(--blue);
-            top: -120px; left: -120px;
+            top: -140px; left: -140px;
             animation: drift1 22s ease-in-out infinite;
         }
         .orbit-blob.b2{
-            width: 380px; height: 380px;
+            width: 400px; height: 400px;
             background: var(--teal);
-            bottom: -140px; right: -100px;
+            bottom: -150px; right: -110px;
             animation: drift2 26s ease-in-out infinite;
         }
         .orbit-blob.b3{
             width: 260px; height: 260px;
-            background: var(--orange);
-            top: 55%; left: 60%;
-            opacity: .18;
+            background: var(--saffron);
+            top: 58%; left: 62%;
+            opacity: .14;
             animation: drift3 30s ease-in-out infinite;
         }
- 
+
         @keyframes drift1{
             0%,100% { transform: translate(0,0); }
             50%     { transform: translate(60px, 80px); }
@@ -102,9 +105,82 @@
             0%,100% { transform: translate(0,0) scale(1); }
             50%     { transform: translate(-40px, 40px) scale(1.15); }
         }
- 
+
+        /* ---------- India map watermark ---------- */
+
+        .india-map{
+            position: fixed;
+            top: 50%;
+            left: 18%;
+            transform: translate(-50%, -50%);
+            width: 620px;
+            max-width: 60vw;
+            opacity: .5;
+            z-index: 0;
+            pointer-events: none;
+            animation: mapFloat 14s ease-in-out infinite;
+        }
+        @keyframes mapFloat{
+            0%,100% { transform: translate(-50%, -50%) translateY(0); }
+            50%     { transform: translate(-50%, -50%) translateY(-14px); }
+        }
+        .india-map path{
+            fill: none;
+            stroke: #9DBEE0;
+            stroke-width: 1.4;
+            stroke-dasharray: 6 5;
+        }
+        .india-map circle.node{
+            fill: var(--teal);
+            opacity: .8;
+        }
+        .india-map circle.pulse{
+            fill: none;
+            stroke: var(--teal);
+            stroke-width: 1.2;
+            opacity: .6;
+            transform-origin: center;
+            animation: pulseRing 3s ease-out infinite;
+        }
+        @keyframes pulseRing{
+            0%   { r: 4; opacity: .7; }
+            100% { r: 16; opacity: 0; }
+        }
+
+        /* ---------- Parliament + waving flag ---------- */
+
+        .monument{
+            position: fixed;
+            right: 4%;
+            bottom: 0;
+            width: 360px;
+            max-width: 34vw;
+            z-index: 0;
+            pointer-events: none;
+            opacity: .92;
+        }
+        .flag-pole{ transform-origin: bottom left; }
+        .flag-stripe{
+            transform-origin: 0% 50%;
+            animation: wave 2.4s ease-in-out infinite;
+        }
+        .flag-stripe.mid{ animation-delay: .08s; }
+        .flag-stripe.bottom{ animation-delay: .16s; }
+        @keyframes wave{
+            0%, 100% { transform: skewY(0deg) scaleY(1); }
+            50%      { transform: skewY(4deg) scaleY(.985); }
+        }
+        .chakra{
+            transform-origin: center;
+            animation: spinSlow 10s linear infinite;
+        }
+        @keyframes spinSlow{
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
         /* ---------- shell / header ---------- */
- 
+
         .page-shell{
             position: relative;
             z-index: 2;
@@ -112,7 +188,7 @@
             display: flex;
             flex-direction: column;
         }
- 
+
         .brand-bar{
             display: flex;
             align-items: center;
@@ -120,7 +196,7 @@
             gap: 10px;
             padding: 28px 20px 6px;
         }
- 
+
         .brand-mark{
             width: 40px;
             height: 40px;
@@ -132,18 +208,18 @@
             font-weight: 700;
             color: #fff;
             font-size: 18px;
-            box-shadow: 0 0 22px rgba(23,195,178,.45);
+            box-shadow: 0 8px 22px rgba(27,111,214,.3);
             flex-shrink: 0;
         }
- 
+
         .brand-name{
             font-size: 1.4rem;
             font-weight: 700;
             letter-spacing: .3px;
-            color: var(--ink-light);
+            color: var(--navy);
         }
         .brand-name span{ color: var(--orange); }
- 
+
         .brand-tag{
             text-align: center;
             color: var(--ink-mute);
@@ -151,9 +227,9 @@
             margin-bottom: 18px;
             letter-spacing: .2px;
         }
- 
+
         /* ---------- login card ---------- */
- 
+
         .login-wrap{
             flex: 1;
             display: flex;
@@ -161,40 +237,41 @@
             justify-content: center;
             padding: 10px 16px 40px;
         }
- 
+
         .login-card{
             width: 100%;
             max-width: 380px;
-            background: linear-gradient(180deg, rgba(20,49,88,.85), rgba(9,26,49,.9));
-            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.82);
+            border: 1px solid var(--line);
             border-radius: 16px;
             padding: 34px 32px 28px;
             backdrop-filter: blur(14px);
-            box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(23,195,178,.05);
+            box-shadow: 0 24px 60px rgba(15,55,100,.14), 0 0 0 1px rgba(23,195,178,.04);
             position: relative;
             animation: rise .6s ease-out;
         }
- 
+
         @keyframes rise{
             from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
         }
- 
+
         .login-card::before{
             content: "";
             position: absolute;
             top: 0; left: 18px; right: 18px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(23,195,178,.7), transparent);
+            height: 2px;
+            background: linear-gradient(90deg, var(--saffron), #fff 48%, var(--india-green));
+            border-radius: 2px;
         }
- 
+
         .login-icon{
             width: 52px;
             height: 52px;
             margin: 0 auto 14px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #1c4d86, #0a2038);
-            border: 1px solid rgba(23,195,178,.4);
+            background: radial-gradient(circle at 35% 30%, #eaf4ff, #d3e8fb);
+            border: 1px solid rgba(23,195,178,.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -206,7 +283,7 @@
             position: absolute;
             inset: -6px;
             border-radius: 50%;
-            border: 1px solid rgba(23,195,178,.25);
+            border: 1px solid rgba(23,195,178,.3);
             animation: pulse-ring 2.6s ease-out infinite;
         }
         @keyframes pulse-ring{
@@ -214,10 +291,10 @@
             80%  { transform: scale(1.35); opacity: 0; }
             100% { opacity: 0; }
         }
- 
+
         .login-title{
             text-align: center;
-            color: var(--ink-light);
+            color: var(--navy);
             font-weight: 700;
             font-size: 1.15rem;
             margin-bottom: 2px;
@@ -228,30 +305,30 @@
             font-size: .8rem;
             margin-bottom: 22px;
         }
- 
+
         .form-label{
             color: var(--ink-mute);
             font-size: .78rem;
             font-weight: 600;
             margin-bottom: 6px;
         }
- 
+
         .form-control{
-            background: rgba(6,20,40,.6);
-            border: 1px solid rgba(255,255,255,.12);
-            color: var(--ink-light);
+            background: #F6FAFE;
+            border: 1px solid var(--line);
+            color: var(--navy);
             padding: 10px 14px;
             border-radius: 9px;
             font-size: .92rem;
         }
         .form-control:focus{
-            background: rgba(6,20,40,.85);
+            background: #ffffff;
             border-color: var(--teal);
-            box-shadow: 0 0 0 3px rgba(23,195,178,.15);
-            color: var(--ink-light);
+            box-shadow: 0 0 0 3px rgba(23,195,178,.14);
+            color: var(--navy);
         }
-        .form-control::placeholder{ color: #5c7392; }
- 
+        .form-control::placeholder{ color: #93a9c4; }
+
         .btn-login{
             width: 100%;
             border: none;
@@ -271,7 +348,7 @@
             color: #fff;
         }
         .btn-login:active{ transform: translateY(0); }
- 
+
         .demo-note{
             text-align: center;
             margin-top: 16px;
@@ -279,45 +356,103 @@
             color: var(--ink-mute);
         }
         .demo-note code{
-            background: rgba(255,122,41,.12);
+            background: rgba(255,122,41,.1);
             color: var(--orange);
             padding: 2px 7px;
             border-radius: 5px;
         }
- 
+
         .footer-strip{
             position: relative;
             z-index: 2;
             text-align: center;
             padding: 10px;
             font-size: .72rem;
-            color: rgba(220,231,245,.55);
+            color: var(--ink-mute);
             letter-spacing: .3px;
+        }
+
+        @media (max-width: 900px){
+            .india-map{ opacity: .3; width: 480px; }
+            .monument{ opacity: .55; width: 260px; }
+        }
+        @media (max-width: 560px){
+            .india-map{ display: none; }
+            .monument{ width: 200px; opacity: .5; }
         }
     </style>
 </head>
 <body>
- 
+
     <canvas id="bg-canvas"></canvas>
     <div class="scan-line"></div>
     <div class="orbit-blob b1"></div>
     <div class="orbit-blob b2"></div>
     <div class="orbit-blob b3"></div>
- 
+
+    <!-- Stylised, dotted India map watermark with a few pulsing data nodes -->
+    <svg class="india-map" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+        <path d="M180 20 L210 15 L230 35 L245 30 L260 45 L255 65 L275 70 L290 60
+                 L305 75 L300 95 L315 110 L310 130 L325 140 L320 165 L335 175
+                 L330 200 L300 230 L305 255 L285 280 L290 305 L270 330 L275 355
+                 L250 375 L245 400 L220 415 L205 440 L185 435 L175 410 L150 400
+                 L145 375 L120 360 L125 335 L105 315 L110 290 L90 270 L100 245
+                 L80 225 L95 200 L85 175 L105 160 L100 135 L120 120 L115 95
+                 L140 85 L135 60 L160 50 L155 30 Z"/>
+        <circle class="node" cx="215" cy="190" r="3.5"/>
+        <circle class="pulse" cx="215" cy="190" r="4"/>
+        <circle class="node" cx="150" cy="260" r="3"/>
+        <circle class="pulse" cx="150" cy="260" r="4" style="animation-delay:1s"/>
+        <circle class="node" cx="240" cy="330" r="3"/>
+        <circle class="pulse" cx="240" cy="330" r="4" style="animation-delay:2s"/>
+        <circle class="node" cx="190" cy="100" r="2.6"/>
+        <circle class="pulse" cx="190" cy="100" r="4" style="animation-delay:1.6s"/>
+    </svg>
+
+    <!-- Parliament dome with a gently waving tricolour -->
+    <svg class="monument" viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="180" cy="248" rx="170" ry="8" fill="#0B2545" opacity=".06"/>
+        <rect x="30" y="150" width="300" height="14" fill="#163E68" opacity=".18"/>
+        <g opacity=".22">
+            <rect x="45" y="100" width="18" height="64" fill="#163E68"/>
+            <rect x="85" y="100" width="18" height="64" fill="#163E68"/>
+            <rect x="125" y="100" width="18" height="64" fill="#163E68"/>
+            <rect x="171" y="100" width="18" height="64" fill="#163E68"/>
+            <rect x="217" y="100" width="18" height="64" fill="#163E68"/>
+            <rect x="257" y="100" width="18" height="64" fill="#163E68"/>
+            <rect x="297" y="100" width="18" height="64" fill="#163E68"/>
+        </g>
+        <circle cx="180" cy="95" r="58" fill="#163E68" opacity=".2"/>
+        <rect x="122" y="95" width="116" height="10" fill="#163E68" opacity=".22"/>
+        <g class="chakra" opacity=".55">
+            <circle cx="180" cy="40" r="10" fill="none" stroke="#1B6FD6" stroke-width="2"/>
+            <circle cx="180" cy="40" r="2" fill="#1B6FD6"/>
+        </g>
+        <g class="flag-pole">
+            <rect x="178" y="12" width="3" height="45" fill="#5C7392"/>
+            <g transform="translate(181,14)">
+                <rect class="flag-stripe top"    x="0" y="0"  width="46" height="6" fill="#FF9933"/>
+                <rect class="flag-stripe mid"    x="0" y="6"  width="46" height="6" fill="#FFFFFF"/>
+                <rect class="flag-stripe bottom" x="0" y="12" width="46" height="6" fill="#128807"/>
+                <circle cx="23" cy="9" r="2.1" fill="none" stroke="#1B6FD6" stroke-width=".6"/>
+            </g>
+        </g>
+    </svg>
+
     <div class="page-shell">
- 
+
         <div class="brand-bar">
             <div class="brand-mark">AX</div>
             <div class="brand-name">Anomaly <span>X</span></div>
         </div>
         <div class="brand-tag">AI-Powered Intelligence for MPLAD</div>
- 
+
         <div class="login-wrap">
             <div class="login-card">
                 <div class="login-icon">🏛️</div>
                 <div class="login-title">MPLAD Anomaly Detection</div>
                 <div class="login-sub">Sign in to your dashboard</div>
- 
+
                 <form action="/login" method="POST">
                     <div class="mb-3">
                         <label for="username" class="form-label">USERNAME</label>
@@ -329,16 +464,16 @@
                     </div>
                     <button type="submit" class="btn-login">Login</button>
                 </form>
- 
+
                 <div class="demo-note">
                     Demo credentials: <code>admin / admin123</code>
                 </div>
             </div>
         </div>
- 
+
         <div class="footer-strip">Transparent MPLAD. Stronger India.</div>
     </div>
- 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Animated node-network background, echoing the "data intelligence" theme
@@ -346,42 +481,42 @@
             const canvas = document.getElementById('bg-canvas');
             const ctx = canvas.getContext('2d');
             let w, h, nodes;
- 
+
             function resize(){
                 w = canvas.width = window.innerWidth;
                 h = canvas.height = window.innerHeight;
             }
             window.addEventListener('resize', resize);
             resize();
- 
-            const NODE_COUNT = Math.min(70, Math.floor((w * h) / 22000));
+
+            const NODE_COUNT = Math.min(60, Math.floor((w * h) / 26000));
             nodes = Array.from({length: NODE_COUNT}, () => ({
                 x: Math.random() * w,
                 y: Math.random() * h,
-                vx: (Math.random() - 0.5) * 0.35,
-                vy: (Math.random() - 0.5) * 0.35,
-                r: Math.random() * 1.6 + 0.6
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                r: Math.random() * 1.5 + 0.6
             }));
- 
+
             const LINK_DIST = 130;
- 
+
             function step(){
                 ctx.clearRect(0, 0, w, h);
- 
+
                 for(const n of nodes){
                     n.x += n.vx;
                     n.y += n.vy;
                     if(n.x < 0 || n.x > w) n.vx *= -1;
                     if(n.y < 0 || n.y > h) n.vy *= -1;
                 }
- 
+
                 for(let i = 0; i < nodes.length; i++){
                     for(let j = i + 1; j < nodes.length; j++){
                         const a = nodes[i], b = nodes[j];
                         const dx = a.x - b.x, dy = a.y - b.y;
                         const dist = Math.sqrt(dx*dx + dy*dy);
                         if(dist < LINK_DIST){
-                            ctx.strokeStyle = `rgba(23,195,178,${(1 - dist / LINK_DIST) * 0.18})`;
+                            ctx.strokeStyle = `rgba(27,111,214,${(1 - dist / LINK_DIST) * 0.14})`;
                             ctx.lineWidth = 1;
                             ctx.beginPath();
                             ctx.moveTo(a.x, a.y);
@@ -390,14 +525,14 @@
                         }
                     }
                 }
- 
+
                 for(const n of nodes){
                     ctx.beginPath();
                     ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(120,180,255,0.5)';
+                    ctx.fillStyle = 'rgba(23,150,200,0.35)';
                     ctx.fill();
                 }
- 
+
                 requestAnimationFrame(step);
             }
             step();
@@ -405,4 +540,3 @@
     </script>
 </body>
 </html>
- 
