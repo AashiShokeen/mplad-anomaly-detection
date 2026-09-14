@@ -1,71 +1,43 @@
-# models.py - Anomaly Model
-
+# app/models.py
+from app import db
 from datetime import datetime
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-class Anomaly:
-    """
-    Anomaly Model - Stores detected issues in projects
-    
-    Attributes:
-    - id: Unique identifier
-    - project_id: ID of the flagged project
-    - anomaly_type: cost_outlier, stalled, or duplicate
-    - severity_score: Float value indicating severity
-    - description: Text description of the anomaly
-    - detected_at: Timestamp when detected
-    - reviewed: Boolean flag if reviewed by admin
-    - notes: Admin notes for follow-up
-    - related_project_id: For duplicate anomalies (ID of similar project)
-    - similarity_score: For duplicate anomalies (similarity percentage)
-    """
-    
-    def __init__(self, project_id=None, anomaly_type=None, severity_score=0.0, 
-                 description=None, related_project_id=None, similarity_score=None):
-        self.id = None
-        self.project_id = project_id
-        self.anomaly_type = anomaly_type  # cost_outlier, stalled, duplicate
-        self.severity_score = severity_score
-        self.description = description
-        self.detected_at = datetime.now()
-        self.reviewed = False
-        self.notes = None
-        self.related_project_id = related_project_id
-        self.similarity_score = similarity_score
-    
-    def to_dict(self):
-        """Convert anomaly to dictionary for API response"""
-        data = {
-            'id': self.id,
-            'project_id': self.project_id,
-            'anomaly_type': self.anomaly_type,
-            'severity': self.severity_score,
-            'description': self.description,
-            'detected_at': self.detected_at.strftime('%Y-%m-%d %H:%M'),
-            'reviewed': self.reviewed
-        }
-        
-        if self.anomaly_type == 'duplicate':
-            data['related_project_id'] = self.related_project_id
-            data['similarity'] = self.similarity_score
-        
-        return data
-    
-    def __repr__(self):
-        return f"<Anomaly {self.id}: {self.anomaly_type} - {self.project_id}>"
+class User(UserMixin, db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
 
-# ============================================
-# Project Class (for testing without database)
-# ============================================
-class Project:
-    """Temporary Project class for testing"""
-    def __init__(self, id, district, village, work_name, workcategory, 
-                 sanction_amount, sanction_date, work_status):
-        self.id = id
-        self.district = district
-        self.village = village
-        self.work_name = work_name
-        self.workcategory = workcategory
-        self.sanction_amount = sanction_amount
-        self.sanction_date = sanction_date
-        self.work_status = work_status
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+class Project(db.Model):
+    __tablename__ = "projects"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200), nullable=False)
+    district = db.Column(db.String(100))
+    work_category = db.Column(db.String(100))
+    amount = db.Column(db.Float)
+    village = db.Column(db.String(100))
+    sanction_date = db.Column(db.DateTime)
+    work_status = db.Column(db.String(50), default='recommended')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    anomalies = db.relationship("Anomaly", backref="project", lazy=True, cascade="all, delete-orphan")
+
+class Anomaly(db.Model):
+    __tablename__ = "anomalies"
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"), nullable=False)
+    anomaly_type = db.Column(db.String(50))
+    severity_score = db.Column(db.Float, default=0.0)
+    description = db.Column(db.Text)
+    detected_at = db.Column(db.DateTime, default=datetime.utcnow)
+    reviewed = db.Column(db.Boolean, default=False, nullable=False)
+    notes = db.Column(db.Text)

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row mt-4">
+    <div class="col-12">
+        <h2>📊 Analytics</h2>
+        <p class="text-muted">District-wise comparison — sorted by stalled rate</p>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <strong>🏘️ District Comparison</strong>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>District</th>
+                        <th>State</th>
+                        <th>Projects</th>
+                        <th>Total Allocation</th>
+                        <th>Stalled Rate</th>
+                    </tr>
+                </thead>
+                <tbody id="districtTable">
+                    <tr><td colspan="5" class="text-center py-4">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/api/district-comparison')
+        .then(r => r.json())
+        .then(data => {
+            const tbody = document.getElementById('districtTable');
+            if (!data || !data.length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No data yet</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.slice(0, 20).map(d => {
+                const cls = d.stalled_rate > 20 ? 'danger' : d.stalled_rate > 10 ? 'warning' : 'success';
+                return `
+                    <tr>
+                        <td><strong>${d.district || 'N/A'}</strong></td>
+                        <td>${d.state || '—'}</td>
+                        <td>${d.total_projects || 0}</td>
+                        <td>₹${((d.total_amount || 0)/10000000).toFixed(2)} Cr</td>
+                        <td><span class="badge bg-${cls}">${d.stalled_rate || 0}%</span></td>
+                    </tr>
+                `;
+            }).join('');
+        })
+        .catch(err => {
+            document.getElementById('districtTable').innerHTML =
+                '<tr><td colspan="5" class="text-center text-danger">Error loading</td></tr>';
+        });
+});
+</script>
+{% endblock %}
