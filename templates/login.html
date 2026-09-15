@@ -452,7 +452,15 @@
                 <div class="login-icon">🏛️</div>
                 <div class="login-title">MPLAD Anomaly Detection</div>
                 <div class="login-sub">Sign in to your dashboard</div>
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div style="background:#fef2f2; color:#991b1b; border:1px solid #fecaca; padding:8px 12px; border-radius:9px; font-size:.82rem; margin-bottom:12px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
                 <form action="/login" method="POST">
                     <div class="mb-3">
                         <label for="username" class="form-label">USERNAME</label>
