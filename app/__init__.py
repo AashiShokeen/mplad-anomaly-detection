@@ -48,17 +48,17 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
 
-    # Auto-seed admin + officer on startup (fresh DB on Render)
+        # Auto-seed admin + officer on startup (fresh DB on Render)
     with app.app_context():
         db.create_all()
         if not User.query.filter_by(username='admin').first():
-            u = User(username='admin')
+            u = User(username='admin', email='admin@mplad.local')
             u.set_password('admin123')
             db.session.add(u)
             db.session.commit()
             app.logger.info('Seeded admin')
         if not User.query.filter_by(username='officer').first():
-            u = User(username='officer')
+            u = User(username='officer', email='officer@mplad.local')
             u.set_password('officer123')
             db.session.add(u)
             db.session.commit()
