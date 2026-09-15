@@ -3,14 +3,25 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import logging
+import os
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app():
-    app = Flask(__name__, template_folder='../templates', static_folder='../static', static_url_path='/static')
+    app = Flask(
+        __name__,
+        template_folder='../templates',
+        static_folder='../static',
+        static_url_path='/static'
+    )
+
+    # Absolute path to instance/mplads.db — no more path confusion
+    basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+    db_path = os.path.join(basedir, 'instance', 'mplads.db')
+
     app.config['SECRET_KEY'] = 'change-this-in-production'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mplads.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['DEBUG'] = True
     app.config['PROPAGATE_EXCEPTIONS'] = True
