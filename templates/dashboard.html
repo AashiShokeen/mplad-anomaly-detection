@@ -1351,23 +1351,34 @@ async function toggleReviewed() {
         function closeExportModal() { document.getElementById('export-modal').classList.add('hidden'); }
 
         function downloadReportSim() {
-            closeExportModal();
-            const rows = [['Metric', 'Value']];
-            rows.push(['Total Projects', document.getElementById('stat-total-projects').textContent]);
-            rows.push(['Total Amount', document.getElementById('stat-total-amount').textContent]);
-            rows.push(['Flagged Count', document.getElementById('stat-flagged-count').textContent]);
-            rows.push(['Districts', document.getElementById('stat-districts').textContent]);
-            const csv = rows.map(r => r.join(',')).join('\n');
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'MPLAD-Audit-Summary.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast("Report generated & downloaded!", "success");
-        }
+    // Read user's choices from the modal
+    const scopeSelect = document.querySelector('#export-modal select');
+    const scope = scopeSelect && scopeSelect.value.toLowerCase().includes('flagged') ? 'flagged' : 'all';
 
+    const fmtRadios = document.querySelectorAll('input[name="export-fmt"]');
+    let fmt = 'CSV';
+    fmtRadios.forEach(r => { if (r.checked) fmt = r.parentElement.innerText.trim(); });
+
+    closeExportModal();
+
+    let url;
+    if (fmt.toUpperCase().includes('PDF')) {
+        url = `/api/export/pdf?scope=${scope}`;
+    } else {
+        // CSV and Excel both use CSV endpoint (Excel opens CSV natively)
+        url = `/api/export/csv?scope=${scope}`;
+    }
+
+    // Trigger browser download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    showToast(`Generating ${fmt} report — check your downloads`, 'success');
+}
         function triggerAIScan() {
             showToast("AI Deep Risk Scan triggered across all projects...", "info");
         }
