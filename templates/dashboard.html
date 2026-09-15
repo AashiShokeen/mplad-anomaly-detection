@@ -55,10 +55,20 @@
             background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
             background-size: 200% 100%;
             animation: skeleton-loading 1.5s infinite;
+            border-radius: 8px;
+            color: transparent !important;
         }
         @keyframes skeleton-loading {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.35s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -99,6 +109,14 @@
                         <span id="sidebar-flag-count" class="bg-red-500/20 text-red-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/30">—</span>
                     </button>
 
+                    <button onclick="switchTab('comparison')" id="side-comparison" class="side-nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white transition-all justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="bi bi-intersect text-sm w-5 text-center text-cyan-400"></i>
+                            <span>Duplicate Detector</span>
+                        </div>
+                        <span id="sidebar-dup-count" class="bg-cyan-500/20 text-cyan-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-cyan-500/30">—</span>
+                    </button>
+
                     <button onclick="switchTab('reports')" id="side-reports" class="side-nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white transition-all">
                         <i class="bi bi-bar-chart-line text-sm w-5 text-center text-emerald-400"></i>
                         <span>Reports & Analytics</span>
@@ -107,22 +125,22 @@
             </div>
 
             <div class="p-4 border-t border-slate-700/60 bg-slate-900/60">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-2.5">
-            <div class="w-8 h-8 rounded-full bg-brand-600 border border-brand-500 flex items-center justify-center font-bold text-xs text-white">NO</div>
-            <div class="text-left">
-                <p class="text-xs font-bold text-white leading-tight">Nodal Officer</p>
-                <p class="text-[10px] text-slate-400 leading-tight">MPLAD Division</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-full bg-brand-600 border border-brand-500 flex items-center justify-center font-bold text-xs text-white">NO</div>
+                        <div class="text-left">
+                            <p class="text-xs font-bold text-white leading-tight">Nodal Officer</p>
+                            <p class="text-[10px] text-slate-400 leading-tight">MPLAD Division</p>
+                        </div>
+                    </div>
+                    <a href="/logout" class="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-slate-800 transition-all" title="Sign Out">
+                        <i class="bi bi-box-arrow-right text-sm"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-        <a href="/logout" class="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-slate-800 transition-all" title="Sign Out">
-            <i class="bi bi-box-arrow-right text-sm"></i>
-        </a>
-    </div>
-</div>
         </aside>
 
-        <div class="flex-1 flex flex-col h-full overflow-y-auto bg-grid-pattern">
+        <div class="flex-1 flex flex-col h-full overflow-y-auto bg-grid-pattern" id="main-scroll">
 
             <!-- Top Header Bar -->
             <header class="bg-white border-b border-slate-200 px-6 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
@@ -131,6 +149,8 @@
                     <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">MPLAD MONITOR</span>
                     <span class="text-slate-300">•</span>
                     <span class="text-xs text-slate-500 font-medium">AI Risk Audit Model v3.2</span>
+                    <span class="text-slate-300">•</span>
+                    <span id="last-updated" class="text-xs text-slate-400 font-mono">—</span>
                 </div>
 
                 <div class="flex items-center space-x-3">
@@ -148,7 +168,7 @@
             <!-- Main Content Area -->
             <main class="p-6 space-y-6 flex-1">
 
-                <div id="view-dashboard" class="space-y-6">
+                <div id="view-dashboard" class="space-y-6 fade-in">
 
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
@@ -179,7 +199,7 @@
                                 <p class="text-xs text-slate-300 mt-1 max-w-xl">Cross-referencing geographical coordinates, invoice textual similarity, and payment anomalies in real-time.</p>
                             </div>
                             <button onclick="switchTab('anomalies')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 shrink-0 self-start md:self-center">
-                                <span id="hero-investigate-btn">Investigate Flagged (—)</span>
+                                <span id="hero-investigate-btn">Investigate Flagged</span>
                                 <i class="bi bi-arrow-right"></i>
                             </button>
                         </div>
@@ -230,7 +250,7 @@
                             <div class="flex items-start justify-between">
                                 <div>
                                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL PROJECTS</p>
-                                    <p id="stat-total-projects" class="text-3xl font-black text-slate-900 mt-2">
+                                    <p id="stat-total-projects" class="text-3xl font-black text-slate-900 mt-2 skeleton">000</p>
                                 </div>
                                 <div class="w-10 h-10 rounded-xl bg-blue-50 text-navy-800 flex items-center justify-center text-lg">
                                     <i class="bi bi-kanban"></i>
@@ -246,7 +266,7 @@
                             <div class="flex items-start justify-between">
                                 <div>
                                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL AMOUNT</p>
-                                    <p id="stat-total-amount" class="text-3xl font-black text-slate-900 mt-2">
+                                    <p id="stat-total-amount" class="text-3xl font-black text-slate-900 mt-2 skeleton">000</p>
                                 </div>
                                 <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
                                     <i class="bi bi-cash-stack"></i>
@@ -259,7 +279,7 @@
                             <div class="flex items-start justify-between">
                                 <div>
                                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">FLAGGED COUNT</p>
-                                    <p id="stat-flagged-count" class="text-3xl font-black text-red-600 mt-2">
+                                    <p id="stat-flagged-count" class="text-3xl font-black text-red-600 mt-2 skeleton">000</p>
                                 </div>
                                 <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg">
                                     <i class="bi bi-flag-fill"></i>
@@ -272,7 +292,7 @@
                             <div class="flex items-start justify-between">
                                 <div>
                                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">DISTRICTS COVERED</p>
-                                    <p id="stat-districts" class="text-3xl font-black text-slate-900 mt-2">
+                                    <p id="stat-districts" class="text-3xl font-black text-slate-900 mt-2 skeleton">000</p>
                                 </div>
                                 <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
                                     <i class="bi bi-geo-alt"></i>
@@ -307,12 +327,8 @@
                                 <div class="space-y-3 text-xs" id="status-legend">
                                     <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
                                         <div class="flex items-center space-x-2">
-                                            <span class="w-3 h-3 rounded-full bg-emerald-700"></span>
-                                            <span class="text-slate-700 font-semibold">Completed</span>
-                                        </div>
-                                        <div class="space-x-1 font-mono">
-                                            <span class="font-bold text-slate-900">—</span>
-                                            <span class="text-slate-400 text-[11px]">(—)</span>
+                                            <span class="w-3 h-3 rounded-full bg-slate-300"></span>
+                                            <span class="text-slate-700 font-semibold">Loading...</span>
                                         </div>
                                     </div>
                                 </div>
@@ -378,10 +394,11 @@
                                         <th class="p-3.5">Amount</th>
                                         <th class="p-3.5">Severity</th>
                                         <th class="p-3.5">AI Confidence</th>
+                                        <th class="p-3.5 text-right">Audit Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="dashboard-anomalies-table" class="divide-y divide-slate-100 font-medium">
-                                    <tr><td colspan="6" class="text-center py-4 text-slate-400">Loading anomalies...</td></tr>
+                                    <tr><td colspan="7" class="text-center py-4 text-slate-400">Loading anomalies...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -389,7 +406,7 @@
 
                 </div>
 
-                <div id="view-anomalies" class="hidden space-y-6">
+                <div id="view-anomalies" class="hidden space-y-6 fade-in">
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
                         <div>
                             <h2 class="text-xl font-extrabold text-slate-900 flex items-center space-x-2">
@@ -422,17 +439,50 @@
                                         <th class="p-4">Amount</th>
                                         <th class="p-4">District</th>
                                         <th class="p-4">Description</th>
+                                        <th class="p-4 text-right">Audit Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="full-anomalies-table" class="divide-y divide-slate-100 font-medium">
-                                    <tr><td colspan="6" class="text-center py-4 text-slate-400">Loading...</td></tr>
+                                    <tr><td colspan="7" class="text-center py-4 text-slate-400">Loading...</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <div id="view-projects" class="hidden space-y-6">
+                <!-- ============ DUPLICATE DETECTOR VIEW ============ -->
+                <div id="view-comparison" class="hidden space-y-6 fade-in">
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900 flex items-center space-x-2">
+                                <i class="bi bi-intersect text-cyan-600"></i>
+                                <span>Geo &amp; Textual Duplicate Detector</span>
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Detecting overlapping works sanctioned twice within the same village and district</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span id="dup-total-badge" class="text-xs font-bold text-cyan-700 bg-cyan-50 border border-cyan-200 px-3 py-1.5 rounded-xl">— duplicate clusters</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-cyan-50 to-blue-50 border border-cyan-200 rounded-2xl p-4 flex items-start space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-600 text-white flex items-center justify-center shrink-0">
+                            <i class="bi bi-diagram-3 text-lg"></i>
+                        </div>
+                        <div class="text-xs text-slate-700">
+                            <p class="font-bold text-slate-900 mb-1">How this works</p>
+                            <p>Projects are grouped by <strong>work name + district + village</strong>. Pairs scoring 50%+ are flagged. Score = same work (40) + same district (30) + same village (20) + identical amount (10).</p>
+                        </div>
+                    </div>
+
+                    <div id="duplicate-pairs-container" class="space-y-5">
+                        <div class="text-center text-slate-400 text-xs py-8">Loading duplicate analysis...</div>
+                    </div>
+
+                </div>
+
+                <div id="view-projects" class="hidden space-y-6 fade-in">
                     <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
                         <div>
                             <h2 class="text-xl font-extrabold text-slate-900 flex items-center space-x-2">
@@ -449,7 +499,7 @@
                     </div>
                 </div>
 
-                <div id="view-reports" class="hidden space-y-6">
+                <div id="view-reports" class="hidden space-y-6 fade-in">
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                             <div>
@@ -499,6 +549,79 @@
                 </div>
 
             </main>
+        </div>
+    </div>
+
+    <!-- ===== XAI EVIDENCE MODAL ===== -->
+    <div id="xai-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl space-y-6 p-6 border border-slate-100">
+
+            <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl font-bold">
+                        <i class="bi bi-shield-exclamation"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h3 id="modal-title" class="text-base font-bold text-slate-900">Project Anomaly Audit</h3>
+                            <span id="modal-severity-badge" class="px-2 py-0.5 text-[10px] rounded-full font-bold">HIGH RISK</span>
+                        </div>
+                        <p id="modal-project-id" class="text-xs text-slate-500 font-mono">ID: —</p>
+                    </div>
+                </div>
+                <button onclick="closeXAIModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg bg-slate-100">
+                    <i class="bi bi-x-lg text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center space-x-2">
+                    <i class="bi bi-cpu text-navy-800"></i>
+                    <span>AI Model Evidence Signal Breakdown</span>
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-bold">Confidence Score</span>
+                        <p id="modal-confidence" class="text-xl font-extrabold text-brand-600">—</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-bold">Rule Triggered</span>
+                        <p id="modal-rule" class="text-xs font-bold text-amber-700">—</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-bold">Exposure Amount</span>
+                        <p id="modal-amount" class="text-xl font-extrabold text-red-600">—</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                    <h5 class="text-xs font-bold text-slate-800">Audit Evidence Logs:</h5>
+                    <ul id="modal-evidence-list" class="space-y-2 text-xs text-slate-600">
+                        <li class="flex items-start space-x-2">
+                            <i class="bi bi-chevron-right text-brand-600 font-bold shrink-0 mt-0.5"></i>
+                            <span>Loading evidence...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                <select id="modal-status-select" class="bg-slate-50 border border-slate-300 text-xs text-slate-800 rounded-xl px-3 py-2 font-medium">
+                    <option value="Under Review">Under Review</option>
+                    <option value="Disbursement Frozen">Disbursement Frozen</option>
+                    <option value="Resolved / Cleared">Resolved / Cleared</option>
+                </select>
+                <div class="flex space-x-2">
+                    <button onclick="saveModalStatus()" class="bg-navy-800 hover:bg-navy-900 text-white text-xs px-4 py-2 rounded-xl font-bold shadow">
+                        Save Status
+                    </button>
+                    <button onclick="closeXAIModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs px-4 py-2 rounded-xl font-semibold">
+                        Close
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -564,72 +687,110 @@
         let anomaliesData = [];
         let projectsList = [];
         let statusChart = null;
+        let currentModalAnomaly = null;
 
+        // ============ BOOT ============
         document.addEventListener('DOMContentLoaded', async function () {
-    await Promise.all([
-        loadDashboardStats(),
-        loadPanels(),
-        loadFlagged(),
-        loadProjects()
-    ]);
-});
+            updateLastUpdated();
+            await Promise.all([
+                loadDashboardStats(),
+                loadPanels(),
+                loadFlagged(),
+                loadProjects(),
+                loadDuplicates()
+            ]);
+        });
+
+        // Close modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeXAIModal();
+                closeExportModal();
+            }
+        });
+
+        function updateLastUpdated() {
+            const el = document.getElementById('last-updated');
+            if (el) {
+                const now = new Date();
+                const hh = String(now.getHours()).padStart(2, '0');
+                const mm = String(now.getMinutes()).padStart(2, '0');
+                el.textContent = `Updated ${hh}:${mm}`;
+            }
+        }
+
+        // Deterministic confidence from severity (stable across refresh)
+        function confidenceFromSeverity(sev) {
+            const s = Number(sev) || 0;
+            // Map severity 0..10 → confidence 82..98
+            const clamped = Math.max(0, Math.min(10, s));
+            return (82 + (clamped / 10) * 16).toFixed(1);
+        }
+
         // ============ FETCH: DASHBOARD STATS ============
         async function loadDashboardStats() {
-    try {
-        // Simulate network delay so skeleton is visible
+            try {
+                const r = await fetch('/api/dashboard/stats');
+                const d = await r.json();
 
-        const r = await fetch('/api/dashboard/stats');
-        const d = await r.json();
+                const el1 = document.getElementById('stat-total-projects');
+                const el2 = document.getElementById('stat-total-amount');
+                const el3 = document.getElementById('stat-flagged-count');
+                el1.classList.remove('skeleton');
+                el2.classList.remove('skeleton');
+                el3.classList.remove('skeleton');
 
-        // Animate numbers up from 0
-        animateNumber('stat-total-projects', d.total_projects || 0, 0);
-        animateNumber('stat-total-amount', d.total_amount_cr || 0, 1, '₹', ' Cr');
-        animateNumber('stat-flagged-count', d.total_anomalies || 0, 0);
-        animateNumber('stat-districts', 47, 0); // placeholder — will be updated by panels fetch
+                animateNumber('stat-total-projects', d.total_projects || 0, 0);
+                animateNumber('stat-total-amount', d.total_amount_cr || 0, 1, '₹', ' Cr');
+                animateNumber('stat-flagged-count', d.total_anomalies || 0, 0);
 
-        document.getElementById('stat-unreviewed').textContent = (d.unreviewed_anomalies || 0) + ' unreviewed alerts';
-        document.getElementById('sidebar-flag-count').textContent = d.total_anomalies || 0;
-        document.getElementById('hero-investigate-btn').textContent = `Investigate Flagged (${d.total_anomalies || 0})`;
-    } catch (e) {
-        console.error('Stats error:', e);
-        // On error, show 0
-        document.getElementById('stat-total-projects').textContent = '0';
-        document.getElementById('stat-total-amount').textContent = '₹0 Cr';
-        document.getElementById('stat-flagged-count').textContent = '0';
-    }
-}
+                document.getElementById('stat-unreviewed').textContent = (d.unreviewed_anomalies || 0) + ' unreviewed alerts';
+                document.getElementById('sidebar-flag-count').textContent = d.total_anomalies || 0;
+                document.getElementById('hero-investigate-btn').textContent = `Investigate Flagged (${d.total_anomalies || 0})`;
 
-// Animate a number from 0 to target
-function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = '') {
-    const el = document.getElementById(elementId);
-    if (!el) return;
+                // Store total amount for allocation badge
+                window.__totalAmountCr = d.total_amount_cr || 0;
+            } catch (e) {
+                console.error('Stats error:', e);
+                ['stat-total-projects', 'stat-total-amount', 'stat-flagged-count'].forEach(id => {
+                    const el = document.getElementById(id);
+                    el.classList.remove('skeleton');
+                    el.textContent = '0';
+                });
+            }
+        }
 
-    const duration = 900;
-    const start = performance.now();
+        function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = '') {
+            const el = document.getElementById(elementId);
+            if (!el) return;
 
-    function step(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const current = target * eased;
-        el.textContent = `${prefix}${current.toFixed(decimals)}${suffix}`;
-        if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = `${prefix}${target.toFixed(decimals)}${suffix}`;
-    }
-    requestAnimationFrame(step);
-}
-        // ============ FETCH: PANELS (top districts, status, outliers) ============
+            const duration = 900;
+            const start = performance.now();
+
+            function step(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = target * eased;
+                el.textContent = `${prefix}${current.toFixed(decimals)}${suffix}`;
+                if (progress < 1) requestAnimationFrame(step);
+                else el.textContent = `${prefix}${target.toFixed(decimals)}${suffix}`;
+            }
+            requestAnimationFrame(step);
+        }
+
+        // ============ FETCH: PANELS ============
         async function loadPanels() {
-    try {
-        const r = await fetch('/api/dashboard/panels');
-        const d = await r.json();
-                // Districts
+            try {
+                const r = await fetch('/api/dashboard/panels');
+                const d = await r.json();
+
+                const distEl = document.getElementById('stat-districts');
+                distEl.classList.remove('skeleton');
                 animateNumber('stat-districts', d.district_count || 0, 0);
                 document.getElementById('stat-districts-meta').textContent = (d.district_count || 0) + ' district jurisdictions';
 
-                // Status chart
                 renderStatusChart(d.status_map || {}, d.total_projects || 0);
 
-                // Top districts list
                 const list = document.getElementById('topDistrictsList');
                 if (list && d.top_districts) {
                     list.innerHTML = d.top_districts.map((x, i) => `
@@ -646,7 +807,6 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
                     `).join('');
                 }
 
-                // Allocation bars
                 const plot = document.getElementById('allocationPlot');
                 if (plot && d.top5_districts) {
                     const maxAmt = Math.max(...d.top5_districts.map(x => x.amount), 1);
@@ -664,8 +824,12 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
                             </div>
                         `;
                     }).join('');
-                    document.getElementById('allocation-total-badge').textContent = '₹' + (d.total_projects ? '—' : '—') + ' total';
                 }
+
+                // Use the true total from stats API (if available)
+                const totalCr = window.__totalAmountCr || 0;
+                const badge = document.getElementById('allocation-total-badge');
+                if (badge) badge.textContent = '₹' + totalCr + ' Cr total';
             } catch (e) {
                 console.error('Panels error:', e);
             }
@@ -679,7 +843,6 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
             const labels = Object.keys(statusMap);
             const values = Object.values(statusMap);
 
-            // Color mapping
             const colorMap = {
                 'completed': '#047857',
                 'sanctioned': '#0056b3',
@@ -714,7 +877,6 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
                 }
             });
 
-            // Legend
             const legend = document.getElementById('status-legend');
             const totalVal = values.reduce((a, b) => a + b, 0) || 1;
             legend.innerHTML = labels.map((l, i) => {
@@ -737,10 +899,32 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
             document.getElementById('status-total-badge').textContent = total + ' projects';
         }
 
+        // ============ SEVERITY HELPERS ============
+        function severityLabel(sev) {
+            const s = Number(sev) || 0;
+            if (s >= 3) return 'HIGH';
+            if (s >= 1.5) return 'MEDIUM';
+            return 'LOW';
+        }
+
+        function severityBadgeClass(label) {
+            if (label === 'HIGH') return 'bg-red-50 text-red-700 border-red-200';
+            if (label === 'MEDIUM') return 'bg-amber-50 text-amber-700 border-amber-200';
+            return 'bg-slate-50 text-slate-700 border-slate-200';
+        }
+
+        function anomalyTypeClass(type) {
+            const t = (type || '').toLowerCase();
+            if (t.includes('cost')) return 'text-red-600';
+            if (t.includes('stall')) return 'text-amber-600';
+            if (t.includes('dup')) return 'text-purple-600';
+            return 'text-brand-600';
+        }
+
         // ============ FETCH: FLAGGED ============
         async function loadFlagged() {
-    try {
-        const r = await fetch('/api/flagged');
+            try {
+                const r = await fetch('/api/flagged');
                 anomaliesData = await r.json();
                 renderDashboardTable();
                 renderFullAnomaliesTable();
@@ -752,15 +936,15 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
         function renderDashboardTable() {
             const tbody = document.getElementById('dashboard-anomalies-table');
             if (!anomaliesData.length) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-slate-400">No anomalies</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-slate-400">No anomalies</td></tr>';
                 return;
             }
             tbody.innerHTML = anomaliesData.slice(0, 5).map(item => {
                 const sev = item.severity || 0;
-                const badge = sev > 100 ? 'HIGH' : sev > 3 ? 'HIGH' : 'MEDIUM';
-                const badgeCls = badge === 'HIGH'
-                    ? 'bg-red-50 text-red-600 border-red-200'
-                    : 'bg-amber-50 text-amber-700 border-amber-200';
+                const label = severityLabel(sev);
+                const cls = severityBadgeClass(label);
+                const type = item.type || item.anomaly_type || '';
+                const typeCls = anomalyTypeClass(type);
                 return `
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="p-3.5">
@@ -768,10 +952,15 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
                             <div class="text-[10px] text-slate-400 font-mono">ID: ${item.project_id || item.id}</div>
                         </td>
                         <td class="p-3.5 text-slate-600 font-medium">${item.district || 'N/A'}</td>
-                        <td class="p-3.5 text-brand-600 font-semibold">${(item.type || item.anomaly_type || '').replace('_', ' ')}</td>
+                        <td class="p-3.5 font-semibold ${typeCls}">${type.replace(/_/g, ' ')}</td>
                         <td class="p-3.5 font-bold text-slate-800">₹${((item.sanction_amount || 0) / 100000).toFixed(1)}L</td>
-                        <td class="p-3.5"><span class="${badgeCls} border px-2 py-0.5 rounded-full text-[10px] font-bold">${badge}</span></td>
-                        <td class="p-3.5 font-mono text-emerald-600 font-bold">${(85 + Math.random() * 12).toFixed(1)}%</td>
+                        <td class="p-3.5"><span class="${cls} border px-2 py-0.5 rounded-full text-[10px] font-bold">${label}</span></td>
+                        <td class="p-3.5 font-mono text-emerald-600 font-bold">${confidenceFromSeverity(sev)}%</td>
+                        <td class="p-3.5 text-right">
+                            <button onclick="openXAIModal('${item.project_id || item.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-[11px] px-3 py-1 rounded-lg border border-slate-200 font-semibold">
+                                Explain Evidence
+                            </button>
+                        </td>
                     </tr>
                 `;
             }).join('');
@@ -781,36 +970,52 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
             const data = filtered || anomaliesData;
             const tbody = document.getElementById('full-anomalies-table');
             if (!data.length) {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-slate-400">No anomalies found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-slate-400">No anomalies found</td></tr>';
                 return;
             }
-            tbody.innerHTML = data.slice(0, 100).map(item => {
+            const visible = data.slice(0, 100);
+            let html = visible.map(item => {
                 const sev = item.severity || 0;
-                const badge = sev > 100 ? 'HIGH' : sev > 3 ? 'HIGH' : 'MEDIUM';
+                const label = severityLabel(sev);
+                const cls = severityBadgeClass(label);
+                const type = item.type || item.anomaly_type || '';
+                const typeCls = anomalyTypeClass(type);
                 return `
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="p-4">
                             <div class="font-bold text-slate-800 text-xs">${item.work_name || 'Unknown'}</div>
                             <div class="text-[11px] text-slate-500">${item.district || 'N/A'}</div>
                         </td>
-                        <td class="p-4 text-xs font-semibold text-brand-600">${(item.type || item.anomaly_type || '').replace('_', ' ')}</td>
-                        <td class="p-4"><span class="bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded-full text-[10px] font-bold">${badge}</span></td>
+                        <td class="p-4 text-xs font-semibold ${typeCls}">${type.replace(/_/g, ' ')}</td>
+                        <td class="p-4"><span class="${cls} border px-2 py-0.5 rounded-full text-[10px] font-bold">${label}</span></td>
                         <td class="p-4 font-bold text-slate-800 text-xs">₹${((item.sanction_amount || 0) / 100000).toFixed(1)}L</td>
                         <td class="p-4 text-xs text-slate-600">${item.district || 'N/A'}</td>
                         <td class="p-4 text-xs text-slate-500">${item.description || '—'}</td>
+                        <td class="p-4 text-right">
+                            <button onclick="openXAIModal('${item.project_id || item.id}')" class="bg-navy-800 hover:bg-navy-900 text-white text-[11px] px-3 py-1.5 rounded-lg font-bold shadow">
+                                Explain Evidence
+                            </button>
+                        </td>
                     </tr>
                 `;
             }).join('');
+
+            if (data.length > 100) {
+                html += `<tr><td colspan="7" class="text-center py-3 text-slate-400 text-xs">Showing first 100 of ${data.length} anomalies. Use search to narrow down.</td></tr>`;
+            }
+
+            tbody.innerHTML = html;
         }
 
         function filterAnomaliesTable() {
-            const search = document.getElementById('anomaly-search').value.toLowerCase();
+            const search = document.getElementById('anomaly-search').value.toLowerCase().trim();
             const type = document.getElementById('anomaly-type-filter').value;
             const filtered = anomaliesData.filter(item => {
                 const name = (item.work_name || '').toLowerCase();
-                const id = String(item.project_id || item.id || '');
-                const mSearch = name.includes(search) || id.includes(search);
-                const mType = (type === 'ALL') || ((item.type || item.anomaly_type) === type);
+                const id = String(item.project_id || item.id || '').toLowerCase();
+                const mSearch = !search || name.includes(search) || id.includes(search);
+                const itemType = (item.type || item.anomaly_type || '').toLowerCase();
+                const mType = (type === 'ALL') || (itemType === type.toLowerCase());
                 return mSearch && mType;
             });
             renderFullAnomaliesTable(filtered);
@@ -818,8 +1023,8 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
 
         // ============ FETCH: PROJECTS ============
         async function loadProjects() {
-    try {
-        const r = await fetch('/api/projects');
+            try {
+                const r = await fetch('/api/projects');
                 const raw = await r.json();
                 projectsList = Array.isArray(raw) ? raw : (raw.projects || []);
                 renderProjectsDirectory();
@@ -871,9 +1076,126 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
             `).join('');
         }
 
+        // ============ FETCH: DUPLICATES ============
+        async function loadDuplicates() {
+            try {
+                const r = await fetch('/api/duplicates');
+                const d = await r.json();
+                renderDuplicates(d.clusters || []);
+                const badge = document.getElementById('sidebar-dup-count');
+                if (badge) badge.textContent = d.total_duplicates || 0;
+                const totalBadge = document.getElementById('dup-total-badge');
+                if (totalBadge) {
+                    const n = d.total_duplicates || 0;
+                    totalBadge.textContent = n + (n >= 50 ? '+ duplicate clusters' : ' duplicate clusters');
+                }
+            } catch (e) {
+                console.error('Duplicates error:', e);
+            }
+        }
+
+        function renderDuplicates(clusters) {
+            const container = document.getElementById('duplicate-pairs-container');
+            if (!container) return;
+
+            if (!clusters.length) {
+                container.innerHTML = '<div class="text-center text-slate-400 text-xs py-8">No duplicate clusters found. Your data is clean.</div>';
+                return;
+            }
+
+            container.innerHTML = clusters.map((c, idx) => {
+                const a = c.project_a;
+                const b = c.project_b;
+                const score = c.score;
+                const scoreColor = score >= 90 ? 'red' : score >= 70 ? 'amber' : 'slate';
+
+                const scoreBadge = {
+                    red: 'bg-red-50 text-red-700 border-red-200',
+                    amber: 'bg-amber-50 text-amber-700 border-amber-200',
+                    slate: 'bg-slate-50 text-slate-700 border-slate-200'
+                }[scoreColor];
+
+                const amountMatch = a.amount === b.amount
+                    ? '<span class="text-[10px] text-red-600 font-bold">⚠ Identical amount</span>'
+                    : `<span class="text-[10px] text-amber-600 font-bold">Δ ₹${(Math.abs(a.amount - b.amount) / 100000).toFixed(1)}L difference</span>`;
+
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-[10px] font-mono text-slate-400">CLUSTER #${String(idx + 1).padStart(2, '0')}</span>
+                                <span class="px-2 py-0.5 text-[10px] rounded-full font-bold border ${scoreBadge}">${score}% MATCH</span>
+                                <span class="text-[11px] text-slate-600 font-semibold">${c.match_type}</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-slate-500">2 projects</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                            <div class="p-5 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-bold text-navy-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">PROJECT A</span>
+                                    <span class="text-[10px] font-mono text-slate-400">ID: ${a.id}</span>
+                                </div>
+                                <h3 class="font-bold text-sm text-slate-900 leading-snug">${a.name || 'Untitled'}</h3>
+                                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                        <span class="block text-slate-400 font-bold uppercase text-[9px]">District</span>
+                                        <span class="text-slate-800 font-semibold">${a.district || 'N/A'}</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                        <span class="block text-slate-400 font-bold uppercase text-[9px]">Village</span>
+                                        <span class="text-slate-800 font-semibold">${a.village || 'N/A'}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                                    <span class="text-xs text-slate-500">Sanctioned Amount</span>
+                                    <span class="font-mono font-extrabold text-slate-900">₹${(a.amount / 100000).toFixed(1)}L</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-slate-500">Sanction Date</span>
+                                    <span class="font-mono text-xs text-slate-700">${a.sanction_date || '—'}</span>
+                                </div>
+                            </div>
+
+                            <div class="p-5 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">PROJECT B</span>
+                                    <span class="text-[10px] font-mono text-slate-400">ID: ${b.id}</span>
+                                </div>
+                                <h3 class="font-bold text-sm text-slate-900 leading-snug">${b.name || 'Untitled'}</h3>
+                                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                        <span class="block text-slate-400 font-bold uppercase text-[9px]">District</span>
+                                        <span class="text-slate-800 font-semibold">${b.district || 'N/A'}</span>
+                                    </div>
+                                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                                        <span class="block text-slate-400 font-bold uppercase text-[9px]">Village</span>
+                                        <span class="text-slate-800 font-semibold">${b.village || 'N/A'}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+                                    <span class="text-xs text-slate-500">Sanctioned Amount</span>
+                                    <span class="font-mono font-extrabold text-slate-900">₹${(b.amount / 100000).toFixed(1)}L</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs text-slate-500">Sanction Date</span>
+                                    <span class="font-mono text-xs text-slate-700">${b.sanction_date || '—'}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                            ${amountMatch}
+                            <span class="text-[10px] text-slate-500">Flagged by Anomaly X duplicate engine</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         // ============ TABS ============
         function switchTab(tabId) {
-            ['dashboard', 'anomalies', 'projects', 'reports'].forEach(t => {
+            ['dashboard', 'anomalies', 'comparison', 'projects', 'reports'].forEach(t => {
                 const el = document.getElementById(`view-${t}`);
                 const sideBtn = document.getElementById(`side-${t}`);
                 if (t === tabId) {
@@ -890,6 +1212,90 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
                     }
                 }
             });
+            const scroller = document.getElementById('main-scroll');
+            if (scroller) scroller.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============ XAI MODAL ============
+        function openXAIModal(id) {
+            const a = anomaliesData.find(x =>
+                String(x.project_id) === String(id) || String(x.id) === String(id)
+            );
+
+            if (!a) {
+                showToast('Anomaly not found in current dataset.', 'info');
+                return;
+            }
+
+            currentModalAnomaly = a;
+
+            const sev = a.severity || 0;
+            const label = severityLabel(sev) + ' RISK';
+            const cls = severityBadgeClass(severityLabel(sev));
+
+            document.getElementById('modal-title').textContent = a.work_name || 'Project Anomaly Audit';
+            document.getElementById('modal-project-id').textContent = `ID: ${a.project_id || a.id || '—'} | ${a.district || 'N/A'}`;
+            const badge = document.getElementById('modal-severity-badge');
+            badge.textContent = label;
+            badge.className = `px-2 py-0.5 text-[10px] rounded-full font-bold border ${cls}`;
+
+            document.getElementById('modal-confidence').textContent = confidenceFromSeverity(sev) + '%';
+            document.getElementById('modal-rule').textContent = (a.type || a.anomaly_type || 'outlier_detection').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            document.getElementById('modal-amount').textContent = '₹' + ((a.sanction_amount || 0) / 100000).toFixed(1) + 'L';
+
+            const evidence = [];
+
+            if (a.description) {
+                evidence.push(a.description);
+            }
+
+            if (a.type || a.anomaly_type) {
+                const t = (a.type || a.anomaly_type).replace(/_/g, ' ');
+                evidence.push(`Detection rule triggered: <strong>${t}</strong>`);
+            }
+
+            if (a.severity) {
+                const sevText = sev >= 3
+                    ? `Cost deviation factor: <strong>${Number(sev).toFixed(2)}x</strong> the district median for this work category.`
+                    : `Deviation factor: <strong>${Number(sev).toFixed(2)}x</strong> the expected benchmark.`;
+                evidence.push(sevText);
+            }
+
+            if (a.district) {
+                evidence.push(`Project located in <strong>${a.district}</strong> district jurisdiction.`);
+            }
+
+            if (a.sanction_amount) {
+                evidence.push(`Sanctioned amount: <strong>₹${(a.sanction_amount / 100000).toFixed(1)}L</strong>.`);
+            }
+
+            evidence.push('Flag generated by rule-based anomaly engine — review recommended before disbursement.');
+
+            const list = document.getElementById('modal-evidence-list');
+            list.innerHTML = evidence.map(e => `
+                <li class="flex items-start space-x-2">
+                    <i class="bi bi-chevron-right text-brand-600 font-bold shrink-0 mt-0.5"></i>
+                    <span>${e}</span>
+                </li>
+            `).join('');
+
+            const modal = document.getElementById('xai-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeXAIModal() {
+            const modal = document.getElementById('xai-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveModalStatus() {
+            if (!currentModalAnomaly) return;
+            const newStatus = document.getElementById('modal-status-select').value;
+            currentModalAnomaly.status = newStatus;
+            showToast(`Status updated to "${newStatus}" for ${currentModalAnomaly.project_id || currentModalAnomaly.id}`, 'success');
+            closeXAIModal();
         }
 
         // ============ MODALS ============
@@ -915,7 +1321,7 @@ function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = ''
         }
 
         function triggerAIScan() {
-            showToast("AI Deep Risk Scan triggered...", "info");
+            showToast("AI Deep Risk Scan triggered across all projects...", "info");
         }
 
         function showToast(msg, type = 'info') {

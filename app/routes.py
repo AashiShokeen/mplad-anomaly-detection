@@ -187,7 +187,86 @@ def api_dashboard_panels():
         'high_priority': high_priority,
         'district_count': district_count,
     })
+# ============ DUPLICATE DETECTOR API ============
+@main_bp.route('/api/duplicates')
+def api_duplicates():
+    """
+    Group projects by (name + district + village) and detect clusters
+    with 2+ identical/near-identical works. Returns scored pairs.
+    """
+    from collections import defaultdict
 
+    projects = Project.query.all()
+
+    # Group by composite key (only if village is present)
+    groups = defaultdict(list)
+    for p in projects:
+        name = (p.name or '').strip().lower()
+        district = (p.district or '').strip().lower()
+        village = (p.village or '').strip().lower()
+
+        if not village:
+            continue
+
+        key = f"{name}|{district}|{village}"
+        groups[key].append(p)
+
+    # Build scored pairs
+    clusters = []
+    for key, members in groups.items():
+        if len(members) < 2:
+            continue
+
+        for i in range(len(members)):
+            for j in range(i + 1, len(members)):
+                a, b = members[i], members[j]
+
+                score = 0
+                score += 40 if (a.name or '').lower() == (b.name or '').lower() else 0
+                score += 30 if (a.district or '').lower() == (b.district or '').lower() else 0
+                score += 20 if (a.village or '').lower() == (b.village or '').lower() else 0
+
+                amt_a = float(a.amount or 0)
+                amt_b = float(b.amount or 0)
+                if amt_a > 0 and amt_a == amt_b:
+                    score += 10
+
+                if score < 50:
+                    continue
+
+                clusters.append({
+                    'score': score,
+                    'match_type': (
+                        'Identical work, identical location' if score >= 90 else
+                        'Same work, same location' if score >= 70 else
+                        'Potential overlap'
+                    ),
+                    'project_a': {
+                        'id': a.id,
+                        'name': a.name,
+                        'district': a.district,
+                        'village': a.village,
+                        'amount': amt_a,
+                        'sanction_date': safe_date(a.sanction_date),
+                        'work_status': a.work_status,
+                    },
+                    'project_b': {
+                        'id': b.id,
+                        'name': b.name,
+                        'district': b.district,
+                        'village': b.village,
+                        'amount': amt_b,
+                        'sanction_date': safe_date(b.sanction_date),
+                        'work_status': b.work_status,
+                    }
+                })
+
+    clusters.sort(key=lambda x: x['score'], reverse=True)
+
+    return jsonify({
+        'total_duplicates': len(clusters),
+        'clusters': clusters[:50]
+    })
 
 @main_bp.route('/health')
 def health():
