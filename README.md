@@ -1,20 +1,30 @@
-# Anomaly X — MPLAD Anomaly Detection
+# 🏛️ Anomaly X — MPLAD Anomaly Detection
+
+**🔗 Live Demo:** [https://anomaly-x.onrender.com](https://anomaly-x.onrender.com)
+
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://anomaly-x.onrender.com)
+[![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/flask-2.3-lightgrey)](https://flask.palletsprojects.com/)
+[![SIH 2026](https://img.shields.io/badge/SIH-2026-orange)](https://sih.gov.in/)
 
 Live audit engine for MPLAD public spending. Detects cost outliers, stalled projects, and duplicate works — with explainable, plain-language reasons.
 
 **SIH 2026 · Problem SIH26102 · Team Anomaly X**
+
+> **Demo login:** `admin` / `admin123`
 
 ---
 
 ## 🎯 What It Does
 
 - Reads MPLAD records from eSAKSHI-style CSV
-- Runs 3 detection rules:
+- Runs detection rules:
   - **Cost outliers** — projects > 3x category median
   - **Stalled projects** — pending > 180 days with > ₹5L
-  - **Duplicates** — similar names in same district
+  - **Duplicates** — same work sanctioned twice in same village
 - Displays live dashboard with real statistics
-- Interactive tables with filtering and analysis
+- Every flag explained with confidence score & audit evidence (XAI modal)
+- Exports real CSV & PDF reports for CAG/Ministry review
 
 ## 🚀 Quick Start
 
@@ -67,9 +77,10 @@ Login: **admin / admin123**
 | :--- | :--- |
 | **Backend** | Python, Flask, Flask-Login, SQLAlchemy |
 | **Database** | SQLite |
-| **Frontend** | HTML, CSS, Bootstrap 5, Chart.js |
+| **Frontend** | Tailwind CSS, HTML, Chart.js, Bootstrap Icons |
 | **Detection** | Python (statistics, difflib) |
-| **Deployment** | PythonAnywhere / Render |
+| **Exports** | reportlab (PDF), csv (spreadsheets) |
+| **Deployment** | Render (auto-seed on boot) |
 
 ---
 
@@ -78,23 +89,37 @@ Login: **admin / admin123**
 \`\`\`
 mplad-anomaly-detection/
 ├── app/
-│   ├── __init__.py       # Flask app factory
+│   ├── __init__.py       # Flask app factory + auto-seed
 │   ├── models.py         # SQLAlchemy models
-│   ├── routes.py         # Page + API routes
+│   ├── routes.py         # Page + API + export routes
 │   ├── auth.py           # Login/logout
 │   └── anomaly.py        # Detection logic
-├── templates/            # HTML pages
+├── templates/            # HTML pages (Jinja)
 ├── static/
 │   ├── css/style.css
-│   └── js/               # Charts, dashboard scripts
+│   └── js/
 ├── data/
 │   └── mplad_cleaned_final.csv
+├── instance/
+│   └── mplads.db         # Pre-built demo DB (shipped to Render)
 ├── load_csv.py           # Load CSV → DB
 ├── run_detection.py      # Run anomaly detection
 ├── create_admin.py       # Create admin user
 ├── run.py                # App entry point
+├── Procfile              # Render start command
 └── requirements.txt
 \`\`\`
+
+---
+
+## ✨ Key Features
+
+- 🚩 **Explainable AI (XAI) modal** — every anomaly shows confidence, rule triggered, and evidence logs
+- 🔗 **Duplicate Detector** — side-by-side comparison of suspected double-funded works
+- ✅ **Audit workflow** — Under Review → Disbursement Frozen → Resolved
+- 👁️ **Show/Hide reviewed toggle** — full audit trail, nothing deleted
+- 📄 **Real exports** — CSV ledgers and formatted PDF audit reports
+- 🌐 **Live on Render** — auto-seeds data on every boot
 
 ---
 
