@@ -131,10 +131,17 @@ def create_app():
     # Always resolve basedir
     basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
-    # On Render, use /tmp (writable, ephemeral).
+       # On Render, use /tmp (writable, ephemeral).
     # Locally, use instance/mplads.db
     if os.environ.get('RENDER'):
         db_path = os.path.join('/tmp', 'mplads.db')
+
+        # On first boot, copy the pre-built DB (with 100 projects + 55 anomalies)
+        # from the repo into /tmp so the demo has real data
+        seed_db = os.path.join(basedir, 'instance', 'mplads.db')
+        if not os.path.exists(db_path) and os.path.exists(seed_db):
+            import shutil
+            shutil.copy(seed_db, db_path)
     else:
         db_dir = os.path.join(basedir, 'instance')
         os.makedirs(db_dir, exist_ok=True)
