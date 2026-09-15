@@ -50,7 +50,13 @@ def api_projects():
 
 @main_bp.route('/api/flagged')
 def api_flagged():
-    anomalies = Anomaly.query.order_by(Anomaly.severity_score.desc()).limit(500).all()
+    show_all = request.args.get('show_all', 'false').lower() == 'true'
+
+    query = Anomaly.query
+    if not show_all:
+        query = query.filter_by(reviewed=False)
+
+    anomalies = query.order_by(Anomaly.severity_score.desc()).limit(500).all()
     result = []
     for a in anomalies:
         p = Project.query.get(a.project_id) if a.project_id else None
@@ -73,7 +79,7 @@ def api_flagged():
 @main_bp.route('/api/dashboard/stats')
 def api_dashboard_stats():
     total_projects = Project.query.count()
-    total_anomalies = Anomaly.query.count()
+    total_anomalies = Anomaly.query.filter_by(reviewed=False).count()
     unreviewed = Anomaly.query.filter_by(reviewed=False).count()
     total_amount = db.session.query(db.func.sum(Project.amount)).scalar() or 0
     return jsonify({
@@ -88,11 +94,16 @@ def api_mark_reviewed(anomaly_id):
     a = Anomaly.query.get(anomaly_id)
     if not a:
         return jsonify({'error': 'Anomaly not found'}), 404
-    a.reviewed = True
+
     data = request.get_json(silent=True) or {}
-    a.notes = data.get('notes', 'Reviewed')
+    status = data.get('notes', 'Under Review')
+
+    a.notes = status
+    # Only 'Resolved / Cleared' counts as fully reviewed
+    a.reviewed = (status == 'Resolved / Cleared')
+
     db.session.commit()
-    return jsonify({'success': True})
+    return jsonify({'success': True, 'reviewed': a.reviewed})
 
 @main_bp.route('/api/district-comparison')
 def api_district_comparison():

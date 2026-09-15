@@ -425,6 +425,9 @@
                                 <option value="stalled">Stalled</option>
                                 <option value="duplicate">Duplicate</option>
                             </select>
+<button onclick="toggleReviewed()" id="reviewed-toggle-btn" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold transition-all">
+    Show reviewed
+</button>
                         </div>
                     </div>
 
@@ -688,6 +691,7 @@
         let projectsList = [];
         let statusChart = null;
         let currentModalAnomaly = null;
+        let showReviewed = false;
 
         // ============ BOOT ============
         document.addEventListener('DOMContentLoaded', async function () {
@@ -923,16 +927,29 @@
 
         // ============ FETCH: FLAGGED ============
         async function loadFlagged() {
-            try {
-                const r = await fetch('/api/flagged');
-                anomaliesData = await r.json();
-                renderDashboardTable();
-                renderFullAnomaliesTable();
-            } catch (e) {
-                console.error('Flagged error:', e);
-            }
-        }
+    try {
+        const url = showReviewed ? '/api/flagged?show_all=true' : '/api/flagged';
+        const r = await fetch(url);
+        anomaliesData = await r.json();
+        renderDashboardTable();
+        renderFullAnomaliesTable();
+    } catch (e) {
+        console.error('Flagged error:', e);
+    }
+}
 
+async function toggleReviewed() {
+    showReviewed = !showReviewed;
+    const btn = document.getElementById('reviewed-toggle-btn');
+    if (btn) {
+        btn.textContent = showReviewed ? 'Hide reviewed' : 'Show reviewed';
+        btn.classList.toggle('bg-navy-800', showReviewed);
+        btn.classList.toggle('text-white', showReviewed);
+        btn.classList.toggle('bg-slate-100', !showReviewed);
+        btn.classList.toggle('text-slate-700', !showReviewed);
+    }
+    await loadFlagged();
+}
         function renderDashboardTable() {
             const tbody = document.getElementById('dashboard-anomalies-table');
             if (!anomaliesData.length) {
@@ -1290,14 +1307,45 @@
             modal.classList.remove('flex');
         }
 
-        function saveModalStatus() {
-            if (!currentModalAnomaly) return;
-            const newStatus = document.getElementById('modal-status-select').value;
-            currentModalAnomaly.status = newStatus;
-            showToast(`Status updated to "${newStatus}" for ${currentModalAnomaly.project_id || currentModalAnomaly.id}`, 'success');
-            closeXAIModal();
-        }
+        async function saveModalStatus() {
+    if (!currentModalAnomaly) return;
 
+    const newStatus = document.getElementById('modal-status-select').value;
+    const anomalyId = currentModalAnomaly.id;
+
+    const btn = event?.target;
+    const originalText = btn?.textContent;
+    if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Saving...';
+    }
+
+    try {
+        const r = await fetch(`/api/anomalies/${anomalyId}/review`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ notes: newStatus })
+        });
+
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+
+        currentModalAnomaly.status = newStatus;
+        currentModalAnomaly.reviewed = true;
+        currentModalAnomaly.notes = newStatus;
+
+        showToast(`Status saved: "${newStatus}"`, 'success');
+        closeXAIModal();
+        await Promise.all([loadFlagged(), loadDashboardStats()]);
+    } catch (e) {
+        console.error('Save status error:', e);
+        showToast('Failed to save status. Check console.', 'info');
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.textContent = originalText || 'Save Status';
+        }
+    }
+}
         // ============ MODALS ============
         function openExportModal() { document.getElementById('export-modal').classList.remove('hidden'); }
         function closeExportModal() { document.getElementById('export-modal').classList.add('hidden'); }
