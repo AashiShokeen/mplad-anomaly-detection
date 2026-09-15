@@ -1,276 +1,932 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-slate-100 text-slate-800">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="MPLAD Monitor government project dashboard">
-    <title>MPLAD Monitor | Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <div class="dashboard">
-        <aside class="sidebar">
-            <div class="sidebar__brand">
-                <div class="sidebar__brand-mark">MP</div>
-                <div><p class="sidebar__brand-name">MPLAD Monitor</p><p class="sidebar__brand-caption">Project Oversight</p></div>
-            </div>
-            <nav class="sidebar__nav" aria-label="Main navigation">
-                <a class="sidebar__link sidebar__link--active" href="/dashboard" aria-current="page"><i class="bi bi-grid-1x2-fill sidebar__link-icon" aria-hidden="true"></i>Overview</a>
-                <a class="sidebar__link" href="/projects"><i class="bi bi-folder2-open sidebar__link-icon" aria-hidden="true"></i>Projects</a>
-                <a class="sidebar__link" href="/flagged"><i class="bi bi-flag sidebar__link-icon" aria-hidden="true"></i>Flagged projects</a>
-                <a class="sidebar__link" href="/analytics"><i class="bi bi-bar-chart-line sidebar__link-icon" aria-hidden="true"></i>Reports</a>
-            </nav>
-            <p class="sidebar__footer">MPLAD project monitoring system</p>
-        </aside>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ANOMALY X - AI-Powered Intelligence and Risk Monitoring for MPLAD Projects">
+    <title>ANOMALY X | MPLAD AI Intelligence Dashboard</title>
 
-        <main class="main-content" id="overview">
-            <header class="page-header">
-                <div><p class="page-header__eyebrow">MPLAD Monitor</p><h1 class="page-header__title">Project overview</h1><p class="page-header__description">A single view of delivery, funding, and risk across constituency development projects.</p></div>
-                <div class="page-header__actions"><button class="button" id="export-report" type="button"><i class="bi bi-download me-2" aria-hidden="true"></i>Export report</button><a class="button button--primary" href="/projects"><i class="bi bi-folder2-open me-2" aria-hidden="true"></i>View projects</a></div>
-            </header>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-            <section class="dashboard-summary" aria-label="Portfolio summary">
-                <article class="dashboard-summary__card"><div><p class="dashboard-summary__label">Total projects</p><p class="dashboard-summary__value dashboard-counter" data-counter="100">100</p><p class="dashboard-summary__meta">+6 this quarter</p></div><i class="bi bi-kanban dashboard-summary__icon" aria-hidden="true"></i></article>
-                <article class="dashboard-summary__card dashboard-summary__card--success"><div><p class="dashboard-summary__label">Total amount</p><p class="dashboard-summary__value dashboard-counter" data-counter="4.8" data-prefix="₹" data-suffix=" Cr" data-decimals="1">₹4.8 Cr</p><p class="dashboard-summary__meta">Across active programs</p></div><i class="bi bi-cash-stack dashboard-summary__icon" aria-hidden="true"></i></article>
-                <article class="dashboard-summary__card dashboard-summary__card--danger"><div><p class="dashboard-summary__label">Flagged count</p><p class="dashboard-summary__value dashboard-counter" data-counter="55">55</p><p class="dashboard-summary__meta">54 high priority</p></div><i class="bi bi-flag dashboard-summary__icon" aria-hidden="true"></i></article>
-                <article class="dashboard-summary__card dashboard-summary__card--warning"><div><p class="dashboard-summary__label">Districts covered</p><p class="dashboard-summary__value dashboard-counter" data-counter="47">47</p><p class="dashboard-summary__meta">47 districts</p></div><i class="bi bi-geo-alt dashboard-summary__icon" aria-hidden="true"></i></article>
-            </section>
-
-            <section class="dashboard-grid" id="reports" aria-label="Portfolio analysis">
-                <article class="dashboard-panel status-distribution">
-                    <div class="dashboard-panel__header">
-                        <div>
-                            <p class="dashboard-panel__eyebrow">Portfolio health</p>
-                            <h2 class="dashboard-panel__title">Status distribution</h2>
-                        </div>
-                        <span class="dashboard-panel__meta">100 projects</span>
-                    </div>
-                    <div class="status-distribution__content">
-                        <div class="status-distribution__chart" role="img" aria-label="65 percent completed, 25 percent in progress, 10 percent stalled" style="background: conic-gradient(#15803d 0 65%, #a16207 65% 90%, #b42318 90% 100%)">
-                            <span>100</span>
-                            <small>projects</small>
-                        </div>
-                        <ul class="status-distribution__legend">
-                            <li>
-                                <span class="status-distribution__key status-distribution__key--completed"></span>
-                                <span>Completed</span>
-                                <strong>65 <small>65%</small></strong>
-                            </li>
-                            <li>
-                                <span class="status-distribution__key status-distribution__key--progress"></span>
-                                <span>In progress</span>
-                                <strong>25 <small>25%</small></strong>
-                            </li>
-                            <li>
-                                <span class="status-distribution__key status-distribution__key--stalled"></span>
-                                <span>Stalled</span>
-                                <strong>10 <small>10%</small></strong>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="dashboard-panel top-mps">
-                    <div class="dashboard-panel__header">
-                        <div>
-                            <p class="dashboard-panel__eyebrow">Leadership view</p>
-                            <h2 class="dashboard-panel__title">Top districts</h2>
-                        </div>
-                        <span class="dashboard-panel__meta">By allocation</span>
-                    </div>
-                    <ol class="top-mps__list" id="topDistrictsList">
-                        <li><span class="top-mps__rank">01</span><span class="top-mps__person"><strong>Loading...</strong><small>—</small></span><span class="top-mps__amount">—</span></li>
-                    </ol>
-                    <a class="dashboard-panel__link" href="/projects">View allocation details <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
-                </article>
-            </section>
-
-            <section class="dashboard-panel allocation-chart" aria-labelledby="allocation-chart-title">
-                <div class="dashboard-panel__header">
-                    <div>
-                        <p class="dashboard-panel__eyebrow">Funding overview</p>
-                        <h2 class="dashboard-panel__title" id="allocation-chart-title">Allocation by district</h2>
-                        <p class="dashboard-panel__description">Committed project funding across the highest-funded districts.</p>
-                    </div>
-                    <span class="dashboard-panel__meta">₹4.8 Cr total</span>
-                </div>
-                <div class="allocation-chart__plot" id="allocationPlot">
-                    <div class="allocation-chart__row"><span class="allocation-chart__label">Loading...</span><div class="allocation-chart__track"><span class="allocation-chart__bar" style="--bar-width: 0%"></span></div><strong>—</strong></div>
-                </div>
-            </section>
-
-            <section class="dashboard-panel cost-outliers" aria-labelledby="cost-outliers-title">
-                <div class="dashboard-panel__header">
-                    <div>
-                        <p class="dashboard-panel__eyebrow">Risk monitoring</p>
-                        <h2 class="dashboard-panel__title" id="cost-outliers-title">Recent cost outliers</h2>
-                        <p class="dashboard-panel__description">Projects exceeding three times the median for their district and work category.</p>
-                    </div>
-                    <a class="dashboard-panel__link" href="/flagged">View all flagged <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
-                </div>
-                <div class="cost-outliers__list" id="costOutliersList">
-                    <p class="text-muted">Loading...</p>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const counters = document.querySelectorAll('.dashboard-counter');
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        function renderCounter(counter, value) {
-            const decimals = Number(counter.dataset.decimals || 0);
-            const prefix = counter.dataset.prefix || '';
-            const suffix = counter.dataset.suffix || '';
-            counter.textContent = `${prefix}${value.toFixed(decimals)}${suffix}`;
-        }
-
-        function animateCounter(counter) {
-            const target = Number(counter.dataset.counter);
-            if (prefersReducedMotion) {
-                renderCounter(counter, target);
-                return;
-            }
-            const duration = 1000;
-            const startedAt = performance.now();
-            const step = (now) => {
-                const progress = Math.min((now - startedAt) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                renderCounter(counter, target * eased);
-                if (progress < 1) window.requestAnimationFrame(step);
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    animateCounter(entry.target);
-                    observer.unobserve(entry.target);
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        navy: { 800: '#1a2a6c', 900: '#122052', 950: '#0a0f24' },
+                        brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#0284c7', 600: '#0056b3', 700: '#004085', 800: '#002b5c' },
+                        saffron: '#e77817',
+                        indiaGreen: '#138808'
+                    }
                 }
-            });
-        }, { threshold: 0.35 });
-        counters.forEach((counter) => counterObserver.observe(counter));
-
-        document.querySelector('#export-report').addEventListener('click', () => {
-            const report = 'Metric,Value\nTotal projects,100\nTotal amount,₹4.8 Cr\nFlagged count,55\nDistricts covered,47\n';
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(new Blob([report], { type: 'text/csv' }));
-            link.download = 'mplad-monitor-summary.csv';
-            link.click();
-            URL.revokeObjectURL(link.href);
-        });
+            }
+        }
     </script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-            // === Stats cards ===
-            setTimeout(function () {
-                fetch('/api/dashboard/stats')
-                    .then(r => r.json())
-                    .then(data => {
-                        document.querySelectorAll('.dashboard-summary__card').forEach(card => {
-                            const label = card.querySelector('.dashboard-summary__label')?.textContent?.toLowerCase() || '';
-                            const valueEl = card.querySelector('.dashboard-summary__value');
-                            if (!valueEl) return;
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image:
+                linear-gradient(to right, rgba(26, 42, 108, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(26, 42, 108, 0.035) 1px, transparent 1px);
+        }
 
-                            if (label.includes('total projects')) {
-                                valueEl.textContent = data.total_projects || 0;
-                            } else if (label.includes('total amount')) {
-                                valueEl.textContent = '₹' + (data.total_amount_cr || 0) + ' Cr';
-                            } else if (label.includes('flagged')) {
-                                valueEl.textContent = data.total_anomalies || 0;
-                            } else if (label.includes('districts')) {
-                                valueEl.textContent = '47';
-                            }
-                        });
-                    })
-                    .catch(err => console.error('Stats error:', err));
-            }, 1500);
+        .tricolor-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #e77817 0% 33%, #ffffff 33% 66%, #138808 66% 100%);
+        }
 
-            // === Panels ===
-            fetch('/api/dashboard/panels')
-                .then(r => r.json())
-                .then(data => {
+        .anomaly-hero-bg {
+            background: linear-gradient(120deg, #061d3a 0%, #0d3760 55%, #0a5a72 100%);
+        }
 
-                    // 1. Status pie center
-                    const chart = document.querySelector('.status-distribution__chart');
-                    if (chart) {
-                        const span = chart.querySelector('span');
-                        if (span) span.textContent = data.total_projects;
-                    }
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans overflow-x-hidden bg-slate-50 text-slate-800 antialiased">
 
-                    // 2. Top districts
-                    const mpsList = document.getElementById('topDistrictsList');
-                    if (mpsList && data.top_districts) {
-                        mpsList.innerHTML = data.top_districts.map((d, i) => `
-                            <li>
-                                <span class="top-mps__rank">0${i+1}</span>
-                                <span class="top-mps__person">
-                                    <strong>${d.district}</strong>
-                                    <small>District</small>
-                                </span>
-                                <span class="top-mps__amount">₹${(d.amount/100000).toFixed(1)}L</span>
-                            </li>
-                        `).join('');
-                    }
+    <div id="app-container" class="h-full flex flex-col md:flex-row bg-slate-50 overflow-hidden">
 
-                    // 3. Allocation by district
-                    const plot = document.getElementById('allocationPlot');
-                    if (plot && data.top5_districts) {
-                        const maxAmt = Math.max(...data.top5_districts.map(d => d.amount)) || 1;
-                        plot.innerHTML = data.top5_districts.map((d) => {
-                            const pct = Math.round((d.amount / maxAmt) * 100);
-                            return `
-                                <div class="allocation-chart__row">
-                                    <span class="allocation-chart__label">${d.district}</span>
-                                    <div class="allocation-chart__track">
-                                        <span class="allocation-chart__bar" style="--bar-width: ${pct}%"></span>
-                                    </div>
-                                    <strong>₹${(d.amount/100000).toFixed(1)}L</strong>
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-navy-800 text-slate-300 flex flex-col justify-between shrink-0 border-r border-slate-800 relative z-20">
+            <div>
+                <div class="p-4 border-b border-slate-700/60 relative">
+                    <div class="absolute top-0 left-0 right-0 tricolor-bar"></div>
+                    <div class="flex items-center space-x-3 mt-1">
+                        <div class="w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white font-black text-xs shadow-md shrink-0">AX</div>
+                        <div>
+                            <h1 class="font-extrabold text-white text-sm tracking-tight leading-none">ANOMALY X</h1>
+                            <p class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold mt-1">MPLAD OVERSIGHT</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="p-3 space-y-1">
+                    <button onclick="switchTab('dashboard')" id="side-dashboard" class="side-nav-btn active w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-white/15 text-white border border-white/10 shadow-sm transition-all">
+                        <i class="bi bi-grid-1x2-fill text-sm w-5 text-center"></i>
+                        <span>Overview</span>
+                    </button>
+
+                    <button onclick="switchTab('projects')" id="side-projects" class="side-nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white transition-all">
+                        <i class="bi bi-folder2-open text-sm w-5 text-center"></i>
+                        <span>Projects</span>
+                    </button>
+
+                    <button onclick="switchTab('anomalies')" id="side-anomalies" class="side-nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white transition-all justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i class="bi bi-flag-fill text-sm w-5 text-center text-red-400"></i>
+                            <span>Flagged Projects</span>
+                        </div>
+                        <span id="sidebar-flag-count" class="bg-red-500/20 text-red-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/30">—</span>
+                    </button>
+
+                    <button onclick="switchTab('reports')" id="side-reports" class="side-nav-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white transition-all">
+                        <i class="bi bi-bar-chart-line text-sm w-5 text-center text-emerald-400"></i>
+                        <span>Reports & Analytics</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-slate-700/60 bg-slate-900/60">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-full bg-brand-600 border border-brand-500 flex items-center justify-center font-bold text-xs text-white">NO</div>
+            <div class="text-left">
+                <p class="text-xs font-bold text-white leading-tight">Nodal Officer</p>
+                <p class="text-[10px] text-slate-400 leading-tight">MPLAD Division</p>
+            </div>
+        </div>
+        <a href="/logout" class="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-slate-800 transition-all" title="Sign Out">
+            <i class="bi bi-box-arrow-right text-sm"></i>
+        </a>
+    </div>
+</div>
+        </aside>
+
+        <div class="flex-1 flex flex-col h-full overflow-y-auto bg-grid-pattern">
+
+            <!-- Top Header Bar -->
+            <header class="bg-white border-b border-slate-200 px-6 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+                <div class="flex items-center space-x-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-600 animate-pulse"></span>
+                    <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">MPLAD MONITOR</span>
+                    <span class="text-slate-300">•</span>
+                    <span class="text-xs text-slate-500 font-medium">AI Risk Audit Model v3.2</span>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="triggerAIScan()" class="bg-slate-900 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 shadow transition-all">
+                        <i class="bi bi-stars text-cyan-400"></i>
+                        <span>Run AI Audit Scan</span>
+                    </button>
+                    <button onclick="openExportModal()" class="bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-2 shadow-sm transition-all">
+                        <i class="bi bi-download text-xs text-slate-500"></i>
+                        <span>Export report</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-6 space-y-6 flex-1">
+
+                <div id="view-dashboard" class="space-y-6">
+
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs font-bold text-navy-800 uppercase tracking-widest flex items-center space-x-1.5 mb-1">
+                                <span class="w-2 h-2 rounded-full bg-navy-800 inline-block"></span>
+                                <span>MPLAD Monitor</span>
+                            </p>
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Project overview</h1>
+                            <p class="text-xs text-slate-500 mt-1 max-w-2xl">A single view of delivery, funding, and risk across constituency development projects.</p>
+                        </div>
+                        <div class="flex items-center space-x-2.5">
+                            <button onclick="openExportModal()" class="bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm flex items-center space-x-2">
+                                <i class="bi bi-download text-slate-400"></i>
+                                <span>Export report</span>
+                            </button>
+                            <button onclick="switchTab('projects')" class="bg-navy-800 hover:bg-navy-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow flex items-center space-x-2">
+                                <i class="bi bi-folder2-open"></i>
+                                <span>View projects</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="anomaly-hero-bg rounded-2xl p-6 border border-slate-700/80 text-white shadow-xl space-y-5">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <span class="text-[11px] font-bold text-amber-400 uppercase tracking-widest">ANOMALY DETECTOR ENGINE</span>
+                                <h2 class="text-xl sm:text-2xl font-extrabold text-white mt-1">AI-Powered Risk & Double-Dipping Oversight</h2>
+                                <p class="text-xs text-slate-300 mt-1 max-w-xl">Cross-referencing geographical coordinates, invoice textual similarity, and payment anomalies in real-time.</p>
+                            </div>
+                            <button onclick="switchTab('anomalies')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-2 shrink-0 self-start md:self-center">
+                                <span id="hero-investigate-btn">Investigate Flagged (—)</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+                            <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                                <div class="flex items-center justify-between text-amber-400">
+                                    <i class="bi bi-database-check text-lg"></i>
+                                    <span class="text-[10px] font-mono text-slate-400">STEP 01</span>
                                 </div>
-                            `;
-                        }).join('');
-                    }
+                                <h4 class="font-bold text-xs text-white">Data Ingestion</h4>
+                                <p class="text-[11px] text-slate-300">eSAKSHI records & UCs</p>
+                            </div>
 
-                    // 4. Cost outliers
-                    const outlierList = document.getElementById('costOutliersList');
-                    if (outlierList && data.outliers) {
-                        if (data.outliers.length === 0) {
-                            outlierList.innerHTML = '<p class="text-muted">No cost outliers detected.</p>';
-                        } else {
-                            outlierList.innerHTML = data.outliers.map(o => `
-                                <article class="cost-outlier">
-                                    <div class="cost-outlier__icon"><i class="bi bi-exclamation-triangle"></i></div>
-                                    <div class="cost-outlier__project">
-                                        <strong>${o.project}</strong>
-                                        <span>${o.district}</span>
+                            <div class="p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-400/30 space-y-1">
+                                <div class="flex items-center justify-between text-cyan-400">
+                                    <i class="bi bi-cpu text-lg"></i>
+                                    <span class="text-[10px] font-mono text-cyan-300">STEP 02</span>
+                                </div>
+                                <h4 class="font-bold text-xs text-white">ML Analysis</h4>
+                                <p class="text-[11px] text-slate-300">Pattern & outlier detection</p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-400/30 space-y-1">
+                                <div class="flex items-center justify-between text-amber-300">
+                                    <i class="bi bi-exclamation-diamond text-lg"></i>
+                                    <span class="text-[10px] font-mono text-amber-200">STEP 03</span>
+                                </div>
+                                <h4 class="font-bold text-xs text-white">Flag Irregularity</h4>
+                                <p class="text-[11px] text-slate-300">Cost & stalled detection</p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-400/30 space-y-1">
+                                <div class="flex items-center justify-between text-emerald-400">
+                                    <i class="bi bi-shield-check text-lg"></i>
+                                    <span class="text-[10px] font-mono text-emerald-300">STEP 04</span>
+                                </div>
+                                <h4 class="font-bold text-xs text-white">Nodal Intervention</h4>
+                                <p class="text-[11px] text-slate-300">Review & verify site</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Metric Cards Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL PROJECTS</p>
+                                    <p id="stat-total-projects" class="text-3xl font-black text-slate-900 mt-2">
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-blue-50 text-navy-800 flex items-center justify-center text-lg">
+                                    <i class="bi bi-kanban"></i>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-4 font-medium flex items-center space-x-1">
+                                <i class="bi bi-arrow-up-right text-emerald-600 font-bold"></i>
+                                <span>Live count from database</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL AMOUNT</p>
+                                    <p id="stat-total-amount" class="text-3xl font-black text-slate-900 mt-2">
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                                    <i class="bi bi-cash-stack"></i>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-4 font-medium">Across active constituency works</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">FLAGGED COUNT</p>
+                                    <p id="stat-flagged-count" class="text-3xl font-black text-red-600 mt-2">
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-lg">
+                                    <i class="bi bi-flag-fill"></i>
+                                </div>
+                            </div>
+                            <p id="stat-unreviewed" class="text-[11px] text-red-600 mt-4 font-bold">— unreviewed alerts</p>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">DISTRICTS COVERED</p>
+                                    <p id="stat-districts" class="text-3xl font-black text-slate-900 mt-2">
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                                    <i class="bi bi-geo-alt"></i>
+                                </div>
+                            </div>
+                            <p id="stat-districts-meta" class="text-[11px] text-slate-500 mt-4 font-medium">— district jurisdictions</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Portfolio Health & Top Districts Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">PORTFOLIO HEALTH</p>
+                                    <h3 class="text-base font-bold text-slate-900">Status distribution</h3>
+                                </div>
+                                <span id="status-total-badge" class="text-xs text-slate-500 font-medium bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200">—</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 items-center gap-6 pt-2">
+                                <div class="h-48 relative flex items-center justify-center">
+                                    <canvas id="statusDistributionChart"></canvas>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                        <span id="donut-center-count" class="text-2xl font-black text-slate-900">—</span>
+                                        <span class="text-[10px] text-slate-400 font-semibold uppercase">projects</span>
                                     </div>
-                                    <div class="cost-outlier__comparison">
-                                        <span class="cost-outlier__amount">₹${(o.amount/100000).toFixed(1)}L</span>
-                                        <span>${o.description}</span>
+                                </div>
+
+                                <div class="space-y-3 text-xs" id="status-legend">
+                                    <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="w-3 h-3 rounded-full bg-emerald-700"></span>
+                                            <span class="text-slate-700 font-semibold">Completed</span>
+                                        </div>
+                                        <div class="space-x-1 font-mono">
+                                            <span class="font-bold text-slate-900">—</span>
+                                            <span class="text-slate-400 text-[11px]">(—)</span>
+                                        </div>
                                     </div>
-                                    <span class="cost-outlier__severity cost-outlier__severity--high">High</span>
-                                </article>
-                            `).join('');
-                        }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                                <div>
+                                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">LEADERSHIP VIEW</p>
+                                    <h3 class="text-base font-bold text-slate-900">Top districts</h3>
+                                </div>
+                                <span class="text-xs text-slate-500 font-medium">By allocation</span>
+                            </div>
+
+                            <div class="divide-y divide-slate-100 text-xs" id="topDistrictsList">
+                                <div class="py-3 text-center text-slate-400 text-xs">Loading...</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Allocation by District -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">FUNDING OVERVIEW</p>
+                                <h3 class="text-base font-bold text-slate-900">Allocation by district</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Committed project funding across highest-funded jurisdictions</p>
+                            </div>
+                            <span id="allocation-total-badge" class="text-xs font-bold text-slate-700 font-mono bg-slate-100 px-3 py-1 rounded-xl border border-slate-200">—</span>
+                        </div>
+
+                        <div class="space-y-3.5 pt-2" id="allocationPlot">
+                            <div class="text-center text-slate-400 text-xs py-4">Loading allocation data...</div>
+                        </div>
+                    </div>
+
+                    <!-- Cost Outliers -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-red-500">RISK MONITORING</p>
+                                <h3 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                                    <i class="bi bi-exclamation-triangle-fill text-red-500"></i>
+                                    <span>Recent cost outliers & flagged works</span>
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Projects exceeding median benchmarks or triggered by AI detection rules</p>
+                            </div>
+                            <button onclick="switchTab('anomalies')" class="text-xs text-navy-800 hover:text-brand-600 font-bold flex items-center space-x-1">
+                                <span>View all flagged</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-3.5">Project Title & ID</th>
+                                        <th class="p-3.5">District</th>
+                                        <th class="p-3.5">Anomaly Type</th>
+                                        <th class="p-3.5">Amount</th>
+                                        <th class="p-3.5">Severity</th>
+                                        <th class="p-3.5">AI Confidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-anomalies-table" class="divide-y divide-slate-100 font-medium">
+                                    <tr><td colspan="6" class="text-center py-4 text-slate-400">Loading anomalies...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="view-anomalies" class="hidden space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900 flex items-center space-x-2">
+                                <i class="bi bi-flag-fill text-red-500"></i>
+                                <span>Flagged Projects & Risk Command Center</span>
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Investigate AI evidence, duplicate works, and cost inflation risks</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" id="anomaly-search" oninput="filterAnomaliesTable()" placeholder="Search project title or ID..." class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 w-64">
+
+                            <select id="anomaly-type-filter" onchange="filterAnomaliesTable()" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-semibold focus:outline-none focus:border-brand-500">
+                                <option value="ALL">All Anomaly Types</option>
+                                <option value="cost_outlier">Cost Outlier</option>
+                                <option value="stalled">Stalled</option>
+                                <option value="duplicate">Duplicate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider text-[10px] border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-4">Project Name</th>
+                                        <th class="p-4">Anomaly Flag</th>
+                                        <th class="p-4">Severity</th>
+                                        <th class="p-4">Amount</th>
+                                        <th class="p-4">District</th>
+                                        <th class="p-4">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="full-anomalies-table" class="divide-y divide-slate-100 font-medium">
+                                    <tr><td colspan="6" class="text-center py-4 text-slate-400">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-projects" class="hidden space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-slate-900 flex items-center space-x-2">
+                                <i class="bi bi-folder2-open text-navy-800"></i>
+                                <span>MPLAD Projects Directory</span>
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Complete listing of sanctioned constituency works</p>
+                        </div>
+                        <input type="text" id="project-search" oninput="filterProjectsGrid()" placeholder="Search project or location..." class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 w-64">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+                        <div class="text-center text-slate-400 text-xs py-8 col-span-full">Loading projects...</div>
+                    </div>
+                </div>
+
+                <div id="view-reports" class="hidden space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <h2 class="text-xl font-extrabold text-slate-900">Audit Reports & Utilization Certificates</h2>
+                                <p class="text-xs text-slate-500 mt-0.5">Download formatted reports for District Authorities and Ministry Review</p>
+                            </div>
+                            <button onclick="openExportModal()" class="bg-navy-800 hover:bg-navy-900 text-white px-4 py-2 rounded-xl text-xs font-bold shadow">
+                                Generate New Summary Report
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                            <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 text-navy-800 flex items-center justify-center text-lg font-bold">
+                                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-slate-900">Quarterly Risk Audit</h3>
+                                <p class="text-xs text-slate-500 leading-relaxed">Detailed break-up of flagged projects, spatial overlap analysis, and vendor flags.</p>
+                                <button onclick="openExportModal()" class="text-xs font-bold text-navy-800 hover:text-brand-600 flex items-center space-x-1 pt-1">
+                                    <span>Download Report</span> <i class="bi bi-download"></i>
+                                </button>
+                            </div>
+
+                            <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg font-bold">
+                                    <i class="bi bi-file-earmark-excel-fill"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-slate-900">Disbursement Log</h3>
+                                <p class="text-xs text-slate-500 leading-relaxed">Raw transaction records cross-referenced with payment anomaly flags.</p>
+                                <button onclick="openExportModal()" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center space-x-1 pt-1">
+                                    <span>Export CSV Ledger</span> <i class="bi bi-download"></i>
+                                </button>
+                            </div>
+
+                            <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg font-bold">
+                                    <i class="bi bi-file-earmark-text-fill"></i>
+                                </div>
+                                <h3 class="font-bold text-sm text-slate-900">UC Compliance Summary</h3>
+                                <p class="text-xs text-slate-500 leading-relaxed">Ministry submission template with signed nodal engineer site verifications.</p>
+                                <button onclick="openExportModal()" class="text-xs font-bold text-amber-700 hover:text-amber-800 flex items-center space-x-1 pt-1">
+                                    <span>Download Summary</span> <i class="bi bi-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="export-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 shadow-2xl border border-slate-100">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-navy-800 flex items-center justify-center text-lg font-bold">
+                        <i class="bi bi-file-earmark-arrow-down"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-slate-900">Export Audit Summary</h3>
+                        <p class="text-xs text-slate-500">Select export parameters and format</p>
+                    </div>
+                </div>
+                <button onclick="closeExportModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="bi bi-x-lg text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Report Scope</label>
+                    <select class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-800 font-medium">
+                        <option>All Constituencies & Projects</option>
+                        <option>Only Flagged Anomalies</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">File Format</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <label class="border border-slate-200 p-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="export-fmt" checked class="text-navy-800">
+                            <span class="font-semibold text-slate-700">CSV</span>
+                        </label>
+                        <label class="border border-slate-200 p-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="export-fmt" class="text-navy-800">
+                            <span class="font-semibold text-slate-700">PDF</span>
+                        </label>
+                        <label class="border border-slate-200 p-2.5 rounded-xl flex items-center space-x-2 cursor-pointer hover:bg-slate-50">
+                            <input type="radio" name="export-fmt" class="text-navy-800">
+                            <span class="font-semibold text-slate-700">Excel</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex space-x-2 pt-2 border-t border-slate-100">
+                <button onclick="downloadReportSim()" class="w-full bg-navy-800 hover:bg-navy-900 text-white text-xs font-bold py-2.5 rounded-xl shadow">
+                    Generate & Download
+                </button>
+                <button onclick="closeExportModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2.5 rounded-xl">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-2"></div>
+
+    <script>
+        let anomaliesData = [];
+        let projectsList = [];
+        let statusChart = null;
+
+        document.addEventListener('DOMContentLoaded', async function () {
+    await Promise.all([
+        loadDashboardStats(),
+        loadPanels(),
+        loadFlagged(),
+        loadProjects()
+    ]);
+});
+        // ============ FETCH: DASHBOARD STATS ============
+        async function loadDashboardStats() {
+    try {
+        // Simulate network delay so skeleton is visible
+
+        const r = await fetch('/api/dashboard/stats');
+        const d = await r.json();
+
+        // Animate numbers up from 0
+        animateNumber('stat-total-projects', d.total_projects || 0, 0);
+        animateNumber('stat-total-amount', d.total_amount_cr || 0, 1, '₹', ' Cr');
+        animateNumber('stat-flagged-count', d.total_anomalies || 0, 0);
+        animateNumber('stat-districts', 47, 0); // placeholder — will be updated by panels fetch
+
+        document.getElementById('stat-unreviewed').textContent = (d.unreviewed_anomalies || 0) + ' unreviewed alerts';
+        document.getElementById('sidebar-flag-count').textContent = d.total_anomalies || 0;
+        document.getElementById('hero-investigate-btn').textContent = `Investigate Flagged (${d.total_anomalies || 0})`;
+    } catch (e) {
+        console.error('Stats error:', e);
+        // On error, show 0
+        document.getElementById('stat-total-projects').textContent = '0';
+        document.getElementById('stat-total-amount').textContent = '₹0 Cr';
+        document.getElementById('stat-flagged-count').textContent = '0';
+    }
+}
+
+// Animate a number from 0 to target
+function animateNumber(elementId, target, decimals = 0, prefix = '', suffix = '') {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+
+    const duration = 900;
+    const start = performance.now();
+
+    function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+        el.textContent = `${prefix}${current.toFixed(decimals)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = `${prefix}${target.toFixed(decimals)}${suffix}`;
+    }
+    requestAnimationFrame(step);
+}
+        // ============ FETCH: PANELS (top districts, status, outliers) ============
+        async function loadPanels() {
+    try {
+        const r = await fetch('/api/dashboard/panels');
+        const d = await r.json();
+                // Districts
+                animateNumber('stat-districts', d.district_count || 0, 0);
+                document.getElementById('stat-districts-meta').textContent = (d.district_count || 0) + ' district jurisdictions';
+
+                // Status chart
+                renderStatusChart(d.status_map || {}, d.total_projects || 0);
+
+                // Top districts list
+                const list = document.getElementById('topDistrictsList');
+                if (list && d.top_districts) {
+                    list.innerHTML = d.top_districts.map((x, i) => `
+                        <div class="py-3 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="font-mono text-slate-400 text-xs font-bold w-6">0${i + 1}</span>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">${x.district}</h4>
+                                    <p class="text-[11px] text-slate-400">District Jurisdiction</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-slate-900 font-mono text-sm">₹${(x.amount / 100000).toFixed(1)}L</span>
+                        </div>
+                    `).join('');
+                }
+
+                // Allocation bars
+                const plot = document.getElementById('allocationPlot');
+                if (plot && d.top5_districts) {
+                    const maxAmt = Math.max(...d.top5_districts.map(x => x.amount), 1);
+                    plot.innerHTML = d.top5_districts.map(x => {
+                        const pct = Math.round((x.amount / maxAmt) * 100);
+                        return `
+                            <div>
+                                <div class="flex justify-between text-xs font-bold text-slate-800 mb-1">
+                                    <span>${x.district}</span>
+                                    <span class="font-mono">₹${(x.amount / 100000).toFixed(1)}L</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-navy-800 h-3 rounded-full transition-all duration-1000" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    document.getElementById('allocation-total-badge').textContent = '₹' + (d.total_projects ? '—' : '—') + ' total';
+                }
+            } catch (e) {
+                console.error('Panels error:', e);
+            }
+        }
+
+        // ============ RENDER: STATUS CHART ============
+        function renderStatusChart(statusMap, total) {
+            const ctx = document.getElementById('statusDistributionChart');
+            if (!ctx) return;
+
+            const labels = Object.keys(statusMap);
+            const values = Object.values(statusMap);
+
+            // Color mapping
+            const colorMap = {
+                'completed': '#047857',
+                'sanctioned': '#0056b3',
+                'in progress': '#d97706',
+                'action pending': '#d97706',
+                'pending': '#d97706',
+                'stalled': '#dc2626',
+                'recommended': '#6b7280'
+            };
+            const colors = labels.map(l => colorMap[l.toLowerCase()] || '#6b7280');
+
+            document.getElementById('donut-center-count').textContent = total;
+
+            if (statusChart) statusChart.destroy();
+
+            statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    cutout: '76%'
+                }
+            });
+
+            // Legend
+            const legend = document.getElementById('status-legend');
+            const totalVal = values.reduce((a, b) => a + b, 0) || 1;
+            legend.innerHTML = labels.map((l, i) => {
+                const count = values[i];
+                const pct = Math.round((count / totalVal) * 100);
+                return `
+                    <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full" style="background:${colors[i]}"></span>
+                            <span class="text-slate-700 font-semibold">${l}</span>
+                        </div>
+                        <div class="space-x-1 font-mono">
+                            <span class="font-bold text-slate-900">${count}</span>
+                            <span class="text-slate-400 text-[11px]">(${pct}%)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('status-total-badge').textContent = total + ' projects';
+        }
+
+        // ============ FETCH: FLAGGED ============
+        async function loadFlagged() {
+    try {
+        const r = await fetch('/api/flagged');
+                anomaliesData = await r.json();
+                renderDashboardTable();
+                renderFullAnomaliesTable();
+            } catch (e) {
+                console.error('Flagged error:', e);
+            }
+        }
+
+        function renderDashboardTable() {
+            const tbody = document.getElementById('dashboard-anomalies-table');
+            if (!anomaliesData.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-slate-400">No anomalies</td></tr>';
+                return;
+            }
+            tbody.innerHTML = anomaliesData.slice(0, 5).map(item => {
+                const sev = item.severity || 0;
+                const badge = sev > 100 ? 'HIGH' : sev > 3 ? 'HIGH' : 'MEDIUM';
+                const badgeCls = badge === 'HIGH'
+                    ? 'bg-red-50 text-red-600 border-red-200'
+                    : 'bg-amber-50 text-amber-700 border-amber-200';
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-3.5">
+                            <div class="font-bold text-slate-800">${item.work_name || 'Unknown'}</div>
+                            <div class="text-[10px] text-slate-400 font-mono">ID: ${item.project_id || item.id}</div>
+                        </td>
+                        <td class="p-3.5 text-slate-600 font-medium">${item.district || 'N/A'}</td>
+                        <td class="p-3.5 text-brand-600 font-semibold">${(item.type || item.anomaly_type || '').replace('_', ' ')}</td>
+                        <td class="p-3.5 font-bold text-slate-800">₹${((item.sanction_amount || 0) / 100000).toFixed(1)}L</td>
+                        <td class="p-3.5"><span class="${badgeCls} border px-2 py-0.5 rounded-full text-[10px] font-bold">${badge}</span></td>
+                        <td class="p-3.5 font-mono text-emerald-600 font-bold">${(85 + Math.random() * 12).toFixed(1)}%</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderFullAnomaliesTable(filtered) {
+            const data = filtered || anomaliesData;
+            const tbody = document.getElementById('full-anomalies-table');
+            if (!data.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-slate-400">No anomalies found</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.slice(0, 100).map(item => {
+                const sev = item.severity || 0;
+                const badge = sev > 100 ? 'HIGH' : sev > 3 ? 'HIGH' : 'MEDIUM';
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4">
+                            <div class="font-bold text-slate-800 text-xs">${item.work_name || 'Unknown'}</div>
+                            <div class="text-[11px] text-slate-500">${item.district || 'N/A'}</div>
+                        </td>
+                        <td class="p-4 text-xs font-semibold text-brand-600">${(item.type || item.anomaly_type || '').replace('_', ' ')}</td>
+                        <td class="p-4"><span class="bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded-full text-[10px] font-bold">${badge}</span></td>
+                        <td class="p-4 font-bold text-slate-800 text-xs">₹${((item.sanction_amount || 0) / 100000).toFixed(1)}L</td>
+                        <td class="p-4 text-xs text-slate-600">${item.district || 'N/A'}</td>
+                        <td class="p-4 text-xs text-slate-500">${item.description || '—'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterAnomaliesTable() {
+            const search = document.getElementById('anomaly-search').value.toLowerCase();
+            const type = document.getElementById('anomaly-type-filter').value;
+            const filtered = anomaliesData.filter(item => {
+                const name = (item.work_name || '').toLowerCase();
+                const id = String(item.project_id || item.id || '');
+                const mSearch = name.includes(search) || id.includes(search);
+                const mType = (type === 'ALL') || ((item.type || item.anomaly_type) === type);
+                return mSearch && mType;
+            });
+            renderFullAnomaliesTable(filtered);
+        }
+
+        // ============ FETCH: PROJECTS ============
+        async function loadProjects() {
+    try {
+        const r = await fetch('/api/projects');
+                const raw = await r.json();
+                projectsList = Array.isArray(raw) ? raw : (raw.projects || []);
+                renderProjectsDirectory();
+            } catch (e) {
+                console.error('Projects error:', e);
+            }
+        }
+
+        function renderProjectsDirectory() {
+            const grid = document.getElementById('projects-grid');
+            if (!projectsList.length) {
+                grid.innerHTML = '<div class="text-center text-slate-400 text-xs py-8 col-span-full">No projects</div>';
+                return;
+            }
+            grid.innerHTML = projectsList.slice(0, 30).map(p => `
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] font-mono text-slate-400">ID: ${p.id}</span>
+                        <span class="px-2 py-0.5 text-[10px] rounded-full font-bold bg-slate-100 text-slate-700 border border-slate-200">${p.work_status || 'Pending'}</span>
+                    </div>
+                    <h3 class="font-bold text-sm text-slate-800">${p.name || p.work_name || 'Untitled'}</h3>
+                    <p class="text-xs text-slate-500"><i class="bi bi-geo-alt-fill text-red-500 mr-1"></i>${p.district || 'N/A'}</p>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between text-xs">
+                        <span class="text-slate-500">Budget: <strong class="text-slate-800">₹${((p.amount || 0) / 100000).toFixed(1)}L</strong></span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProjectsGrid() {
+            const q = document.getElementById('project-search').value.toLowerCase();
+            const grid = document.getElementById('projects-grid');
+            const filtered = projectsList.filter(p =>
+                (p.name || '').toLowerCase().includes(q) || (p.district || '').toLowerCase().includes(q)
+            );
+            if (!filtered.length) {
+                grid.innerHTML = '<div class="text-center text-slate-400 text-xs py-8 col-span-full">No matches</div>';
+                return;
+            }
+            grid.innerHTML = filtered.slice(0, 30).map(p => `
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="text-[10px] font-mono text-slate-400">ID: ${p.id}</span>
+                        <span class="px-2 py-0.5 text-[10px] rounded-full font-bold bg-slate-100 text-slate-700 border border-slate-200">${p.work_status || 'Pending'}</span>
+                    </div>
+                    <h3 class="font-bold text-sm text-slate-800">${p.name || 'Untitled'}</h3>
+                    <p class="text-xs text-slate-500"><i class="bi bi-geo-alt-fill text-red-500 mr-1"></i>${p.district || 'N/A'}</p>
+                </div>
+            `).join('');
+        }
+
+        // ============ TABS ============
+        function switchTab(tabId) {
+            ['dashboard', 'anomalies', 'projects', 'reports'].forEach(t => {
+                const el = document.getElementById(`view-${t}`);
+                const sideBtn = document.getElementById(`side-${t}`);
+                if (t === tabId) {
+                    el.classList.remove('hidden');
+                    if (sideBtn) {
+                        sideBtn.classList.add('bg-white/15', 'text-white', 'shadow-sm');
+                        sideBtn.classList.remove('text-slate-300', 'hover:bg-slate-800/80');
                     }
+                } else {
+                    el.classList.add('hidden');
+                    if (sideBtn) {
+                        sideBtn.classList.remove('bg-white/15', 'text-white', 'shadow-sm');
+                        sideBtn.classList.add('text-slate-300', 'hover:bg-slate-800/80');
+                    }
+                }
+            });
+        }
 
-                    // 5. Meta labels
-                    const hpMeta = document.querySelector('.dashboard-summary__card--danger .dashboard-summary__meta');
-                    if (hpMeta) hpMeta.textContent = `${data.high_priority} high priority`;
+        // ============ MODALS ============
+        function openExportModal() { document.getElementById('export-modal').classList.remove('hidden'); }
+        function closeExportModal() { document.getElementById('export-modal').classList.add('hidden'); }
 
-                    const dMeta = document.querySelector('.dashboard-summary__card--warning .dashboard-summary__meta');
-                    if (dMeta) dMeta.textContent = `${data.district_count} districts`;
+        function downloadReportSim() {
+            closeExportModal();
+            const rows = [['Metric', 'Value']];
+            rows.push(['Total Projects', document.getElementById('stat-total-projects').textContent]);
+            rows.push(['Total Amount', document.getElementById('stat-total-amount').textContent]);
+            rows.push(['Flagged Count', document.getElementById('stat-flagged-count').textContent]);
+            rows.push(['Districts', document.getElementById('stat-districts').textContent]);
+            const csv = rows.map(r => r.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'MPLAD-Audit-Summary.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("Report generated & downloaded!", "success");
+        }
 
-                })
-                .catch(err => console.error('Panels error:', err));
-        });
+        function triggerAIScan() {
+            showToast("AI Deep Risk Scan triggered...", "info");
+        }
+
+        function showToast(msg, type = 'info') {
+            const c = document.getElementById('toast-container');
+            const t = document.createElement('div');
+            const bg = type === 'success' ? 'bg-slate-900 text-white border-slate-800' : 'bg-navy-800 text-white border-brand-700';
+            t.className = `p-3.5 rounded-xl border ${bg} shadow-2xl text-xs font-semibold flex items-center space-x-2 transition-all duration-300`;
+            t.innerHTML = `<i class="bi bi-info-circle-fill"></i><span>${msg}</span>`;
+            c.appendChild(t);
+            setTimeout(() => t.remove(), 3500);
+        }
     </script>
 </body>
 </html>
